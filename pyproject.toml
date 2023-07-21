@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "menus-ylab"
+version = "0.1.0"
+description = ""
+authors = ["Nella <nella611@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "menus_ylab"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.100.0"
+uvicorn = "^0.23.1"
+sqlalchemy = "^2.0.19"
+psycopg2 = "^2.9.6"
+alembic = "^1.11.1"
+python-dotenv = "^1.0.0"
+pydantic = "^2.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
