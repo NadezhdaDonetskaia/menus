@@ -1,1 +1,8 @@
+.venv
 .env
+dist
+__pycache__/
+.idea/
+.coverage
+coverage.*
+.vscode
