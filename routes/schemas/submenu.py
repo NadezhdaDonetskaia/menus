@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from .dish import Dish
 
 
 class SubMenuCreate(BaseModel):
@@ -6,8 +7,11 @@ class SubMenuCreate(BaseModel):
     menu_id: int
 
 
-class SubMenuDetail(BaseModel):
+class SubMenu(BaseModel):
     id: int
     name: str
     menu_id: int
-    dishes_count: int
+    dishes: list[Dish] = []
+
+    class Config:
+        orm_mode = True

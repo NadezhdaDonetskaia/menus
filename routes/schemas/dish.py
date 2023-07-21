@@ -7,7 +7,11 @@ class DishCreate(BaseModel):
     submenu_id: int
 
 
-class DishDetail(BaseModel):
+class Dish(BaseModel):
     id: int
+    submenu_id: int
     name: str
     price: float
+
+    class Config:
+        orm_mode = True

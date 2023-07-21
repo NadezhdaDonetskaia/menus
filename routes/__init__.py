@@ -1,7 +1,9 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 
-from .menus import router as menu_router
+from .menu import router as menu_router
+from .submenu import router as sub_menu_router
 
 app = FastAPI()
 
 app.include_router(menu_router)
+app.include_router(sub_menu_router)
