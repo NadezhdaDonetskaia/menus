@@ -1,11 +1,11 @@
 from fastapi import APIRouter
-from routes.schemas.submenu import SubMenu, SubMenuCreate
+from routes.schemas.submenu import SubMenu, SubMenuCreate, SubMenuDetail
 
 router = APIRouter
 
 
 @router.get('/menus/')
-async def get_sub_menus(args: SubMenu):
+async def get_sub_menus(args: SubMenuDetail):
     return []
 
 

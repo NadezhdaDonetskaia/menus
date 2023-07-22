@@ -13,3 +13,9 @@ class Menu(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class MenuDetail(BaseModel):
+    id: int
+    name: str
+    submenus_count: int

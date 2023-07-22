@@ -1,11 +1,11 @@
 from fastapi import APIRouter
-from routes.schemas.menu import Menu, MenuCreate
+from routes.schemas.menu import Menu, MenuCreate, MenuDetail
 
 router = APIRouter
 
 
 @router.get('/menus/')
-async def get_menus(args: Menu):
+async def get_menus(args: MenuDetail):
     return []
 
 

@@ -15,3 +15,10 @@ class SubMenu(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class SubMenuDetail(BaseModel):
+    id: int
+    name: str
+    menu_id: int
+    dishes_count: int
