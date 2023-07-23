@@ -4,21 +4,21 @@ from routes.schemas.menu import Menu, MenuCreate, MenuDetail
 router = APIRouter
 
 
-@router.get('/menus/')
+@router.get('/api/v1/menus/')
 async def get_menus(args: MenuDetail):
     return []
 
 
-@router.put('/menus/')
+@router.post('/api/v1/menus/')
 async def create_menu(args: MenuCreate):
     return []
 
 
-@router.patch('/menus/<menu_id>')
-async def update_menu(args: Menu):
+@router.patch('/api/v1/menus/<menu_id>')
+async def update_menu(menu_id: int, args: Menu):
     return []
 
 
-@router.delete('/menus/<menu_id>')
-async def delete_menu(args: Menu):
+@router.delete('/api/v1/menus/<menu_id>')
+async def delete_menu(menu_id: int, args: Menu):
     return []

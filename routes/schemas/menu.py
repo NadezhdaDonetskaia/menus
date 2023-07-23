@@ -3,12 +3,14 @@ from .submenu import SubMenu
 
 
 class MenuCreate(BaseModel):
-    name: str
+    title: str
+    description: str
 
 
 class Menu(BaseModel):
     id: int
-    name: str
+    title: str
+    description: str
     submenus: list[SubMenu] = []
 
     class Config:
@@ -17,6 +19,7 @@ class Menu(BaseModel):
 
 class MenuDetail(BaseModel):
     id: int
-    name: str
+    title: str
+    description: str
     submenus_count: int
     dishes_count: int

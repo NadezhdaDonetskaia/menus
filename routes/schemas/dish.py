@@ -2,7 +2,8 @@ from pydantic import BaseModel
 
 
 class DishCreate(BaseModel):
-    name: str
+    title: str
+    description: str
     price: float
     submenu_id: int
 
@@ -10,7 +11,8 @@ class DishCreate(BaseModel):
 class Dish(BaseModel):
     id: int
     submenu_id: int
-    name: str
+    title: str
+    description: str
     price: float
 
     class Config:
