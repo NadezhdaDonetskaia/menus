@@ -1,12 +1,9 @@
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
+from database import BaseDBModel
 
 
-Base = declarative_base()
-
-
-class SubMenu(Base):
+class SubMenu(BaseDBModel):
     __tablename__ = 'submenus'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)

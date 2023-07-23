@@ -1,12 +1,10 @@
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
+from database import BaseDBModel
 
-Base = declarative_base()
 
-
-class Dish(Base):
+class Dish(BaseDBModel):
     __tablename__ = 'dishes'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
