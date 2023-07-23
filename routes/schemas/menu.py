@@ -19,3 +19,4 @@ class MenuDetail(BaseModel):
     id: int
     name: str
     submenus_count: int
+    dishes_count: int

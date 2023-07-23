@@ -11,7 +11,8 @@ class Dish(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     submenu_id = Column(Integer, ForeignKey("submenus.id"))
-    name = Column(String(64), index=True)
-    price = Column(Float)
+    title = Column(String(64), index=True)
+    description = Column(String(128))
+    price = Column(Float())
 
     submenu = relationship("SubMenu", back_populates="dishes")
