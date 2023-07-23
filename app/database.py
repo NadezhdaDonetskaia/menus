@@ -1,7 +1,12 @@
+import os
+from contextlib import asynccontextmanager
+from typing import Optional
+
 import asyncpg
 from sqlalchemy.orm import DeclarativeBase
 from dotenv import load_dotenv
-import os
+
+
 load_dotenv()
 
 
@@ -18,11 +23,11 @@ class BaseDBModel(DeclarativeBase):
     pass
 
 
-def _connection_init(conn):
+async def _connection_init(conn):
     return conn
 
 
-_pool = None
+_pool: Optional[asyncpg.pool.Pool] = None
 
 
 async def connect():
@@ -36,5 +41,24 @@ async def connect():
             database=DB_NAME,
             user=DB_USER,
             password=DB_PASSWORD,
+            min_size=1,
+            max_size=4,
             )
+
     return _pool
+
+
+async def close_conn():
+    global _pool
+
+    if not _pool:
+        return
+    await _pool.close()
+
+
+@asynccontextmanager
+async def get_connection():
+    conn_pool = await connect()
+    conn = await conn_pool.acquire()
+    yield conn
+    await conn_pool.release(conn)

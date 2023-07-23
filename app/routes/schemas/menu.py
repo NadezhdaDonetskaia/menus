@@ -8,7 +8,7 @@ class MenuCreate(BaseModel):
 
 
 class Menu(BaseModel):
-    id: int
+    # id: int
     title: str
     description: str
     submenus: list[SubMenu] = []

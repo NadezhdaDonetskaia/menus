@@ -1,7 +1,7 @@
 from fastapi import APIRouter
-from routes.schemas.dish import Dish, DishCreate
+from .schemas.dish import Dish, DishCreate
 
-router = APIRouter
+router = APIRouter()
 
 
 @router.get('/menus/')

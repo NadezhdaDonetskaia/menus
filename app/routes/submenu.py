@@ -1,7 +1,7 @@
 from fastapi import APIRouter
-from routes.schemas.submenu import SubMenu, SubMenuCreate, SubMenuDetail
+from .schemas.submenu import SubMenu, SubMenuCreate, SubMenuDetail
 
-router = APIRouter
+router = APIRouter()
 
 
 @router.get('/menus/')
