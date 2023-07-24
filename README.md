@@ -35,5 +35,7 @@ docker-compose up
 
 4. Для остановки:
 ```
-docker-compose down 
+docker-compose down
 ```
+
+Результаты тестов [тут](<menu app.postman_test_run.json>)
