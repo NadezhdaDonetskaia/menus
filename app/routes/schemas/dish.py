@@ -5,15 +5,15 @@ class DishCreate(BaseModel):
     title: str
     description: str
     price: float
-    submenu_id: int
+    # submenu_id: int
 
 
 class Dish(BaseModel):
-    id: str
-    submenu_id: str
+    # id: str
+    # submenu_id: str
     title: str
     description: str
-    price: float
+    price: str
 
     class Config:
         orm_mode = True

@@ -5,14 +5,14 @@ from pydantic import BaseModel
 class SubMenuCreate(BaseModel):
     title: str
     description: str
-    menu_id: str
+    # menu_id: str
 
 
 class SubMenu(BaseModel):
     # id: int
     title: str
     description: str
-    menu_id: int
+    # menu_id: int
     # dishes: list[Dish] = []
 
     class Config:

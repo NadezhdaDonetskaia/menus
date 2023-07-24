@@ -16,11 +16,11 @@ async def get_dishes(submenu_id: str):
         return await conn.fetch(query, submenu_id)
 
 
-@router.post('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes')
+@router.post('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes', status_code=201)
 async def create_dish(submenu_id: str, args: DishCreate):
     query = """
-        INSERT INTO dishes(id, submenu_id, title, description)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO dishes(id, submenu_id, title, description, price)
+        VALUES ($1, $2, $3, $4, $5)
     """
     async with get_connection() as conn:
         await conn.fetch(
@@ -28,7 +28,8 @@ async def create_dish(submenu_id: str, args: DishCreate):
             uuid.uuid4(),
             submenu_id,
             args.title,
-            args.description
+            args.description,
+            args.price
             )
         query_get = """
             SELECT * FROM dishes WHERE title=$1

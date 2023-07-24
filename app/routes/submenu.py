@@ -7,7 +7,7 @@ router = APIRouter()
 
 
 @router.get('/api/v1/menus/{menu_id}/submenus')
-async def get_sub_menus(menu_id: str):
+async def get_submenus(menu_id: str):
     query = """
         SELECT * FROM submenus
         WHERE menu_id=$1
@@ -16,7 +16,7 @@ async def get_sub_menus(menu_id: str):
         return await conn.fetch(query, menu_id)
 
 
-@router.post('/api/v1/menus/{menu_id}/submenus')
+@router.post('/api/v1/menus/{menu_id}/submenus', status_code=201)
 async def create_submenu(menu_id: str, args: SubMenuCreate):
     query = """
         INSERT INTO submenus(id, menu_id, title, description)
