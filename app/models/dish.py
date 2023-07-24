@@ -11,6 +11,6 @@ class Dish(BaseDBModel):
     submenu_id = Column(UUID, ForeignKey("submenus.id"))
     title = Column(String(64), unique=True, index=True)
     description = Column(String(128))
-    price = Column(UUID)
+    price = Column(String(8))
 
     submenu = relationship("SubMenu", back_populates="dishes")

@@ -29,7 +29,8 @@ async def create_dish(submenu_id: str, args: DishCreate):
             submenu_id,
             args.title,
             args.description,
-            args.price
+            # f'{args.price:.2f}'
+            f'{args.price}'
             )
         query_get = """
             SELECT * FROM dishes WHERE title=$1
@@ -54,13 +55,14 @@ async def get_dish(dish_id: str):
 async def update_dish(dish_id: str, args: Dish):
     query = """
         UPDATE dishes
-        SET title=$1, description=$2
-        WHERE id=$3
+        SET title=$1, description=$2, price=$3
+        WHERE id=$4
     """
     async with get_connection() as conn:
         response = await conn.fetch(query,
                                     args.title,
                                     args.description,
+                                    args.price,
                                     dish_id)
         query_get = """
             SELECT * FROM dishes WHERE id=$1

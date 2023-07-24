@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class DishCreate(BaseModel):
     title: str
     description: str
-    price: float
+    price: str
     # submenu_id: int
 
 

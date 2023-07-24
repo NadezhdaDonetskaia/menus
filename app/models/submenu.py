@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey, UUID
+from sqlalchemy import Column, String, ForeignKey, UUID, Integer
 from sqlalchemy.orm import relationship
 from database import BaseDBModel
 
@@ -14,3 +14,5 @@ class SubMenu(BaseDBModel):
     menu = relationship("Menu", back_populates="submenus")
     dishes = relationship("Dish", back_populates="submenu",
                           cascade="all, delete-orphan")
+
+    dishes_count = Column(Integer, server_default='0', nullable=False)
