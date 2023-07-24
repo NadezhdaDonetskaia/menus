@@ -9,8 +9,8 @@ class DishCreate(BaseModel):
 
 
 class Dish(BaseModel):
-    id: int
-    submenu_id: int
+    id: str
+    submenu_id: str
     title: str
     description: str
     price: float

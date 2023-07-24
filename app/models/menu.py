@@ -1,13 +1,13 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, String, UUID
 from sqlalchemy.orm import relationship
 
-from app.database import BaseDBModel
+from database import BaseDBModel
 
 
 class Menu(BaseDBModel):
     __tablename__ = 'menus'
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(UUID, primary_key=True, index=True)
     title = Column(String(64), unique=True, index=True)
     description = Column(String(128))
 

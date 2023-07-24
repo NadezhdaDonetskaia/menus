@@ -1,15 +1,15 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, String, ForeignKey, Float, UUID
 from sqlalchemy.orm import relationship
 
-from app.database import BaseDBModel
+from database import BaseDBModel
 
 
 class Dish(BaseDBModel):
     __tablename__ = 'dishes'
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    submenu_id = Column(Integer, ForeignKey("submenus.id"))
-    title = Column(String(64), index=True)
+    id = Column(UUID, primary_key=True, index=True)
+    submenu_id = Column(UUID, ForeignKey("submenus.id"))
+    title = Column(String(64), unique=True, index=True)
     description = Column(String(128))
     price = Column(Float())
 
