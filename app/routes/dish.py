@@ -17,20 +17,38 @@ async def get_dishes(submenu_id: str):
 
 
 @router.post('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes', status_code=201)
-async def create_dish(submenu_id: str, args: DishCreate):
-    query = """
+async def create_dish(menu_id: str, submenu_id: str, args: DishCreate):
+    query_create = """
         INSERT INTO dishes(id, submenu_id, title, description, price)
         VALUES ($1, $2, $3, $4, $5)
     """
+    query_update_count_menu = """
+        UPDATE menus
+        SET dishes_count = dishes_count + 1
+        WHERE id=$1
+    """
+    query_update_count_submenu = """
+        UPDATE submenus
+        SET dishes_count = dishes_count + 1
+        WHERE id=$1
+    """
     async with get_connection() as conn:
         await conn.fetch(
-            query,
+            query_create,
             uuid.uuid4(),
             submenu_id,
             args.title,
             args.description,
             # f'{args.price:.2f}'
             f'{args.price}'
+            )
+        await conn.fetch(
+            query_update_count_menu,
+            menu_id
+            )
+        await conn.fetch(
+            query_update_count_submenu,
+            submenu_id
             )
         query_get = """
             SELECT * FROM dishes WHERE title=$1
@@ -72,10 +90,22 @@ async def update_dish(dish_id: str, args: Dish):
 
 
 @router.delete('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}')
-async def delete_submenu(dish_id: str):
-    query = """
+async def delete_submenu(menu_id: str, submenu_id: str, dish_id: str):
+    query_del = """
         DELETE FROM dishes
         WHERE id=$1
     """
+    query_update_count_menu = """
+        UPDATE menus
+        SET dishes_count = dishes_count - 1
+        WHERE id=$1
+    """
+    query_update_count_submenu = """
+        UPDATE submenus
+        SET dishes_count = dishes_count - 1
+        WHERE id=$1
+    """
     async with get_connection() as conn:
-        return await conn.fetch(query, dish_id)
+        await conn.fetch(query_update_count_menu, menu_id)
+        await conn.fetch(query_update_count_submenu, submenu_id)
+        return await conn.fetch(query_del, dish_id)

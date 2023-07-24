@@ -1,0 +1,21 @@
+services:
+  app:
+    image: nella611/menus
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8000:8000
+
+  db:
+    image: postgres:15
+    environment:
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+        - POSTGRES_DB=${DB_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U db_user -d db_name"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

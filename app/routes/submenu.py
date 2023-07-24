@@ -18,17 +18,26 @@ async def get_submenus(menu_id: str):
 
 @router.post('/api/v1/menus/{menu_id}/submenus', status_code=201)
 async def create_submenu(menu_id: str, args: SubMenuCreate):
-    query = """
+    query_create = """
         INSERT INTO submenus(id, menu_id, title, description)
         VALUES ($1, $2, $3, $4)
     """
+    query_update_count = """
+        UPDATE menus
+        SET submenus_count = submenus_count + 1
+        WHERE id=$1
+    """
     async with get_connection() as conn:
         await conn.fetch(
-            query,
+            query_create,
             uuid.uuid4(),
             menu_id,
             args.title,
             args.description
+            )
+        await conn.fetch(
+            query_update_count,
+            menu_id
             )
         query_get = """
             SELECT * FROM submenus WHERE title=$1
@@ -69,10 +78,18 @@ async def update_submenu(submenu_id: str, args: SubMenu):
 
 
 @router.delete('/api/v1/menus/{menu_id}/submenus/{submenu_id}')
-async def delete_submenu(submenu_id: str):
-    query = """
+async def delete_submenu(menu_id: str, submenu_id: str):
+    query_del = """
         DELETE FROM submenus
         WHERE id=$1
     """
+    query_update_count = """
+        UPDATE menus
+        SET dishes_count = dishes_count - (
+        SELECT dishes_count FROM submenus WHERE submenus.menu_id = menu_id
+        ), submenus_count = submenus_count - 1
+        WHERE id=$1
+    """
     async with get_connection() as conn:
-        return await conn.fetch(query, submenu_id)
+        await conn.fetch(query_update_count, menu_id)
+        return await conn.fetch(query_del, submenu_id)

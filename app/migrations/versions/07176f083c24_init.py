@@ -1,8 +1,8 @@
 """init
 
-Revision ID: e2c05b762128
+Revision ID: 07176f083c24
 Revises: 
-Create Date: 2023-07-24 19:23:57.579687
+Create Date: 2023-07-24 20:09:58.913110
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e2c05b762128'
+revision = '07176f083c24'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,7 +34,7 @@ def upgrade() -> None:
     sa.Column('title', sa.String(length=64), nullable=True),
     sa.Column('description', sa.String(length=128), nullable=True),
     sa.Column('dishes_count', sa.Integer(), server_default='0', nullable=False),
-    sa.ForeignKeyConstraint(['menu_id'], ['menus.id'], ),
+    sa.ForeignKeyConstraint(['menu_id'], ['menus.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_submenus_id'), 'submenus', ['id'], unique=False)
@@ -45,7 +45,7 @@ def upgrade() -> None:
     sa.Column('title', sa.String(length=64), nullable=True),
     sa.Column('description', sa.String(length=128), nullable=True),
     sa.Column('price', sa.String(length=8), nullable=True),
-    sa.ForeignKeyConstraint(['submenu_id'], ['submenus.id'], ),
+    sa.ForeignKeyConstraint(['submenu_id'], ['submenus.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_dishes_id'), 'dishes', ['id'], unique=False)
