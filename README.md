@@ -28,14 +28,23 @@
 docker-compose build
 ```
 3. Для запуска приложения:
+
+* для простого запуска
 ```
-docker-compose up
+docker-compose up -d
 ```
 Теперь по адресу http://localhost:8000/ приложение будет доступно
+* для запуска в режиме разработчика (hot reload)
+
+```
+docker-compose docker-compose.yml -f docker-compose.dev.yml up 
+```
+Теперь можно отслеживать результаты изменения без перезапуска докера
 
 4. Для остановки:
 ```
 docker-compose down
 ```
 
-Результаты тестов [тут](<menu app.postman_test_run.json>)
+
+Результаты тестов postman [тут](<menu app.postman_test_run.json>)
