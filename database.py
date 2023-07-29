@@ -1,22 +1,10 @@
-import os
+
 from contextlib import asynccontextmanager
 from typing import Optional
 
 import asyncpg
 from sqlalchemy.orm import DeclarativeBase
-from dotenv import load_dotenv
-
-
-load_dotenv()
-
-
-db_url = os.getenv("DATABASE_URL")
-
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
+from .config import DB_HOST, DB_NAME, DB_USER, DB_PORT, DB_PASSWORD
 
 
 class BaseDBModel(DeclarativeBase):

@@ -1,6 +1,6 @@
 import uuid
 from fastapi import APIRouter, HTTPException
-from database import get_connection
+from ..database import get_connection
 from .schemas.dish import Dish, DishCreate
 
 router = APIRouter()

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 import uuid
-from database import get_connection
+from ..database import get_connection
 from .schemas.menu import Menu, MenuCreate
 
 router = APIRouter()

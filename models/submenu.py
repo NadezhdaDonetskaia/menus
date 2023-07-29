@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey, UUID, Integer
 from sqlalchemy.orm import relationship
-from database import BaseDBModel
+from ..database import BaseDBModel
 
 
 class SubMenu(BaseDBModel):

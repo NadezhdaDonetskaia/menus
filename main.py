@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from routes import menu_router, sub_menu_router, dish_router
+from .routes import menu_router, sub_menu_router, dish_router
 
 app = FastAPI()
 

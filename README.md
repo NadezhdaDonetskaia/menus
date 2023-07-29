@@ -37,7 +37,7 @@ docker-compose up -d
 * для запуска в режиме разработчика (hot reload)
 
 ```
-docker-compose docker-compose.yml -f docker-compose.dev.yml up 
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 Теперь можно отслеживать результаты изменения без перезапуска докера
 
