@@ -14,4 +14,4 @@ class SubMenuChange(BaseSubMenu):
 
 
 class SubMenuShow(BaseSubMenu):
-    dish_count: int
+    dishes_count: int

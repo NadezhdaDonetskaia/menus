@@ -21,4 +21,4 @@ class SubMenu(BaseDBModel):
     dishes_count = column_property(
        select(
            func.count(Dish.id)).where(
-               Dish.submenu_id == id).correlate_except(Dish))
+               Dish.submenu_id == id).correlate_except(Dish).scalar_subquery())

@@ -13,7 +13,7 @@ db: Session = Depends(get_db)
 @router.get(
         '/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes',
         response_model=List[DishShow])
-async def get_dishes(submenu_id: str, db=db):
+def get_dishes(submenu_id: str, db=db):
     dishes = db.query(Dish).filter(
         Dish.submenu_id == submenu_id).all()
 
@@ -22,9 +22,9 @@ async def get_dishes(submenu_id: str, db=db):
 
 @router.post('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes',
              status_code=201)
-async def create_dish(submenu_id: str,
-                      dish_data: DishChange,
-                      db=db):
+def create_dish(submenu_id: str,
+                dish_data: DishChange,
+                db=db):
     new_dish = Dish(**dish_data.dict(),
                     id=uuid.uuid4(),
                     submenu_id=submenu_id)
@@ -35,9 +35,9 @@ async def create_dish(submenu_id: str,
 
 
 @router.get("/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}")
-async def get_dish(dish_id: str,
-                   submenu_id: str,
-                   db=db):
+def get_dish(dish_id: str,
+             submenu_id: str,
+             db=db):
     dish = db.query(Dish).filter(
         Dish.id == dish_id, Dish.submenu_id == submenu_id
     ).first()
@@ -47,10 +47,10 @@ async def get_dish(dish_id: str,
 
 
 @router.patch('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}')
-async def update_dish(dish_id: str,
-                      submenu_id: str,
-                      dish_data: DishChange,
-                      db=db):
+def update_dish(dish_id: str,
+                submenu_id: str,
+                dish_data: DishChange,
+                db=db):
     dish = db.query(Dish).filter(
         Dish.id == dish_id, Dish.submenu_id == submenu_id).first()
     if not dish:
@@ -66,9 +66,9 @@ async def update_dish(dish_id: str,
 
 
 @router.delete('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}')
-async def delete_submenu(submenu_id: str,
-                         dish_id: str,
-                         db=db):
+def delete_submenu(submenu_id: str,
+                   dish_id: str,
+                   db=db):
     dish = db.query(Dish).filter(
         Dish.id == dish_id, Dish.submenu_id == submenu_id).first()
     if not dish:

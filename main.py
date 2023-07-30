@@ -1,15 +1,18 @@
 from fastapi import FastAPI
 import uvicorn
-from database import engine, BaseDBModel
+from database import BaseDBModel, engine
 from routes import menu_router, sub_menu_router, dish_router
 
+
+BaseDBModel.metadata.create_all(bind=engine)
+
+
 app = FastAPI()
+
 
 app.include_router(menu_router)
 app.include_router(sub_menu_router)
 app.include_router(dish_router)
-
-BaseDBModel.metadata.create_all(bind=engine)
 
 
 if __name__ == "__main__":

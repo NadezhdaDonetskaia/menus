@@ -20,11 +20,11 @@ class Menu(BaseDBModel):
 
     submenus_count = column_property(
         select(func.count(SubMenu.id)).where(
-            SubMenu.menu_id == id).correlate_except(SubMenu).as_scalar()
+            SubMenu.menu_id == id).correlate_except(SubMenu).scalar_subquery()
     )
 
     dishes_count = column_property(
         select(func.count(Dish.id)).where(Dish.submenu_id.in_(
             select(SubMenu.id).where(SubMenu.menu_id == id)
-        )).correlate_except(Dish).as_scalar()
+        )).correlate_except(Dish).scalar_subquery()
     )

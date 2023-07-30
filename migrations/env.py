@@ -4,10 +4,11 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-import models
-from database import BaseDBModel
+from models.menu import Menu, SubMenu, Dish
+from models.menu import BaseDBModel
 from dotenv import load_dotenv
 import os
+
 
 load_dotenv()
 
@@ -74,7 +75,10 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata,
+            # process_revision_directives=process_revision_directives,
+            # **current_app.extensions['migrate'].configure_args,
+            compare_type=True
         )
 
         with context.begin_transaction():
