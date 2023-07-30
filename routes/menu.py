@@ -8,9 +8,11 @@ from database import get_db
 
 router = APIRouter()
 
+db: Session = Depends(get_db)
+
 
 @router.get('/api/v1/menus', response_model=List[MenuShow])
-async def get_menus(db: Session = Depends(get_db)):
+async def get_menus(db=db):
     menus = db.query(Menu).all()
 
     for menu in menus:
@@ -21,7 +23,7 @@ async def get_menus(db: Session = Depends(get_db)):
 
 
 @router.post('/api/v1/menus', status_code=201)
-async def create_menu(menu_data: MenuChange, db: Session = Depends(get_db)):
+async def create_menu(menu_data: MenuChange, db=db):
     new_menu = Menu(**menu_data.dict(), id=uuid.uuid4())
     db.add(new_menu)
     db.commit()
@@ -30,7 +32,7 @@ async def create_menu(menu_data: MenuChange, db: Session = Depends(get_db)):
 
 
 @router.get("/api/v1/menus/{menu_id}")
-async def get_menu(menu_id: str, db: Session = Depends(get_db)):
+async def get_menu(menu_id: str, db=db):
     menu = db.query(Menu).filter(Menu.id == menu_id).first()
     if not menu:
         raise HTTPException(status_code=404, detail="menu not found")
@@ -38,10 +40,12 @@ async def get_menu(menu_id: str, db: Session = Depends(get_db)):
 
 
 @router.patch("/api/v1/menus/{menu_id}")
-async def update_menu(menu_id: str, menu_data: MenuChange, db: Session = Depends(get_db)):
+async def update_menu(menu_id: str,
+                      menu_data: MenuChange,
+                      db: Session = Depends(get_db)):
     menu = db.query(Menu).filter(Menu.id == menu_id).first()
     if not menu:
-        raise HTTPException(status_code=404, detail="Menu not found")
+        raise HTTPException(status_code=404, detail="menu not found")
 
     for key, value in menu_data.dict().items():
         setattr(menu, key, value)
@@ -53,10 +57,10 @@ async def update_menu(menu_id: str, menu_data: MenuChange, db: Session = Depends
 
 
 @router.delete("/api/v1/menus/{menu_id}")
-async def delete_menu(menu_id: str, db: Session = Depends(get_db)):
+async def delete_menu(menu_id: str, db=db):
     menu = db.query(Menu).filter(Menu.id == menu_id).first()
     if not menu:
-        raise HTTPException(status_code=404, detail="Menu not found")
+        raise HTTPException(status_code=404, detail="menu not found")
 
     db.delete(menu)
     db.commit()

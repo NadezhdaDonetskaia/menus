@@ -1,13 +1,7 @@
 from pydantic import BaseModel
 
 
-class SubMenuCreate(BaseModel):
-    title: str
-    description: str
-
-
-class SubMenu(BaseModel):
-    # id: int
+class BaseSubMenu(BaseModel):
     title: str
     description: str
 
@@ -15,7 +9,9 @@ class SubMenu(BaseModel):
         orm_mode = True
 
 
-class SubMenuDetail(BaseModel):
-    title: str
-    description: str
-    menu_id: str
+class SubMenuChange(BaseSubMenu):
+    pass
+
+
+class SubMenuShow(BaseSubMenu):
+    dish_count: int

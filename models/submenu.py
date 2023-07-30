@@ -18,7 +18,7 @@ class SubMenu(BaseDBModel):
     dishes = relationship("Dish", back_populates="submenu",
                           cascade="all, delete-orphan")
 
-    dish_count = column_property(
+    dishes_count = column_property(
        select(
            func.count(Dish.id)).where(
                Dish.submenu_id == id).correlate_except(Dish))
