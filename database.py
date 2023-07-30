@@ -1,52 +1,19 @@
 
-from contextlib import asynccontextmanager
-from typing import Optional
-
-import asyncpg
-from sqlalchemy.orm import DeclarativeBase
-from .config import DB_HOST, DB_NAME, DB_USER, DB_PORT, DB_PASSWORD
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from config import db_url
 
 
-class BaseDBModel(DeclarativeBase):
-    pass
+DATABASE_URL = db_url
+engine = create_engine(DATABASE_URL)
+BaseDBModel = declarative_base()
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-async def _connection_init(conn):
-    return conn
-
-
-_pool: Optional[asyncpg.pool.Pool] = None
-
-
-async def connect():
-    global _pool
-
-    if not _pool:
-        _pool = await asyncpg.create_pool(
-            init=_connection_init,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_NAME,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            min_size=1,
-            max_size=4,
-            )
-
-    return _pool
-
-
-async def close_conn():
-    global _pool
-
-    if not _pool:
-        return
-    await _pool.close()
-
-
-@asynccontextmanager
-async def get_connection():
-    conn_pool = await connect()
-    conn = await conn_pool.acquire()
-    yield conn
-    await conn_pool.release(conn)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

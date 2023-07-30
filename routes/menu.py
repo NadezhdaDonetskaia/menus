@@ -1,76 +1,62 @@
-from fastapi import APIRouter, HTTPException
+from typing import List
 import uuid
-from ..database import get_connection
-from .schemas.menu import Menu, MenuCreate
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from .schemas.menu import MenuChange, MenuShow
+from models.menu import Menu
+from database import get_db
 
 router = APIRouter()
 
 
-@router.get('/api/v1/menus')
-async def get_menus():
-    query = """
-        SELECT * FROM menus
-    """
-    async with get_connection() as conn:
-        return await conn.fetch(query)
+@router.get('/api/v1/menus', response_model=List[MenuShow])
+async def get_menus(db: Session = Depends(get_db)):
+    menus = db.query(Menu).all()
+
+    for menu in menus:
+        menu.submenus_count = menu.submenus_count
+        menu.dishes_count = menu.dishes_count
+
+    return menus
 
 
 @router.post('/api/v1/menus', status_code=201)
-async def create_menu(args: MenuCreate):
-    query = """
-        INSERT INTO menus(id, title, description)
-        VALUES ($1, $2, $3)
-    """
-    async with get_connection() as conn:
-        await conn.fetch(
-            query,
-            uuid.uuid4(),
-            args.title,
-            args.description
-            )
-        query_get = """
-            SELECT * FROM menus WHERE title=$1
-        """
-        response = await conn.fetch(query_get, args.title)
-        return response[0]
+async def create_menu(menu_data: MenuChange, db: Session = Depends(get_db)):
+    new_menu = Menu(**menu_data.dict(), id=uuid.uuid4())
+    db.add(new_menu)
+    db.commit()
+    db.refresh(new_menu)
+    return new_menu
 
 
 @router.get("/api/v1/menus/{menu_id}")
-async def get_menu(menu_id: str):
-    query = """
-        SELECT * FROM menus WHERE id=$1
-    """
-    async with get_connection() as conn:
-        response = await conn.fetch(query, menu_id)
-        if not response:
-            raise HTTPException(status_code=404, detail="menu not found")
-        return response[0]
+async def get_menu(menu_id: str, db: Session = Depends(get_db)):
+    menu = db.query(Menu).filter(Menu.id == menu_id).first()
+    if not menu:
+        raise HTTPException(status_code=404, detail="menu not found")
+    return menu
 
 
 @router.patch("/api/v1/menus/{menu_id}")
-async def update_menu(menu_id: str, args: Menu):
-    query = """
-        UPDATE menus
-        SET title=$1, description=$2
-        WHERE id=$3
-    """
-    async with get_connection() as conn:
-        response = await conn.fetch(query,
-                                    args.title,
-                                    args.description,
-                                    menu_id)
-        query_get = """
-            SELECT * FROM menus WHERE id=$1
-        """
-        response = await conn.fetch(query_get, menu_id)
-        return response[0]
+async def update_menu(menu_id: str, menu_data: MenuChange, db: Session = Depends(get_db)):
+    menu = db.query(Menu).filter(Menu.id == menu_id).first()
+    if not menu:
+        raise HTTPException(status_code=404, detail="Menu not found")
+
+    for key, value in menu_data.dict().items():
+        setattr(menu, key, value)
+
+    db.commit()
+    db.refresh(menu)
+
+    return menu
 
 
 @router.delete("/api/v1/menus/{menu_id}")
-async def delete_menu(menu_id: str):
-    query = """
-        DELETE FROM menus
-        WHERE id=$1
-    """
-    async with get_connection() as conn:
-        return await conn.fetch(query, menu_id)
+async def delete_menu(menu_id: str, db: Session = Depends(get_db)):
+    menu = db.query(Menu).filter(Menu.id == menu_id).first()
+    if not menu:
+        raise HTTPException(status_code=404, detail="Menu not found")
+
+    db.delete(menu)
+    db.commit()

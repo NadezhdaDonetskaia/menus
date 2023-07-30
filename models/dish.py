@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, UUID
 from sqlalchemy.orm import relationship
 
-from ..database import BaseDBModel
+from database import BaseDBModel
 
 
 class Dish(BaseDBModel):

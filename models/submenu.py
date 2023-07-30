@@ -1,6 +1,9 @@
-from sqlalchemy import Column, String, ForeignKey, UUID, Integer
+from sqlalchemy import Column, String, ForeignKey, UUID
+from sqlalchemy import func, select
+from sqlalchemy.orm import column_property
 from sqlalchemy.orm import relationship
-from ..database import BaseDBModel
+from database import BaseDBModel
+from .dish import Dish
 
 
 class SubMenu(BaseDBModel):
@@ -15,4 +18,7 @@ class SubMenu(BaseDBModel):
     dishes = relationship("Dish", back_populates="submenu",
                           cascade="all, delete-orphan")
 
-    dishes_count = Column(Integer, server_default='0', nullable=False)
+    dish_count = column_property(
+       select(
+           func.count(Dish.id)).where(
+               Dish.submenu_id == id).correlate_except(Dish))
