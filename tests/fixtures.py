@@ -11,3 +11,6 @@ DISH_DATA = {"title": "Test Dish",
 DISH_DATA_UPDATE = {"title": "Test Dish updat",
                     "description": "Test Dish Description update",
                     "price": "170.99"}
+DISH_DATA2 = {"title": "Test Dish2",
+              "description": "Test Description Dish2",
+              "price": "250.50"}

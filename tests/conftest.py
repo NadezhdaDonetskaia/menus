@@ -8,12 +8,13 @@ from models.submenu import SubMenu
 from models.dish import Dish
 from main import app
 from database import BaseDBModel, get_db
-from .fixtures import MENU_DATA, SUBMENU_DATA, DISH_DATA
+from .fixtures import MENU_DATA, SUBMENU_DATA, DISH_DATA, DISH_DATA2
 
 
 @pytest.fixture
 def test_db():
-    engine = create_engine("postgresql://postgres:postgres@localhost:5432/menu")
+    engine = create_engine(
+        "postgresql://postgres:postgres@localhost:5432/menu")
     TestingSessionLocal = sessionmaker(autocommit=False,
                                        autoflush=False,
                                        bind=engine)
@@ -60,6 +61,16 @@ def submenu(test_db, menu):
 @pytest.fixture
 def dish(test_db, submenu):
     test_db.add(Dish(**DISH_DATA,
+                     id=uuid.uuid4(),
+                     submenu_id=submenu.id))
+    test_db.commit()
+    dish = test_db.query(Dish).first()
+    return dish
+
+
+@pytest.fixture
+def dish2(test_db, submenu):
+    test_db.add(Dish(**DISH_DATA2,
                      id=uuid.uuid4(),
                      submenu_id=submenu.id))
     test_db.commit()
