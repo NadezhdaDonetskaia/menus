@@ -29,18 +29,32 @@ def test_get_submenu(test_app, menu, submenu):
     assert response.json()["description"] == SUBMENU_DATA["description"]
 
 
-def test_update_submenu(test_app, menu, test_db):
+def test_update_submenu(test_app, menu, submenu):
     menu_id = menu.id
-    response = test_app.patch(f"/api/v1/menus/{menu_id}",
-                              json=SUBMENU_DATA_UPDATE)
+    submenu_id = submenu.id
+    response = test_app.patch(
+        f"/api/v1/menus/{menu_id}/submenus/{submenu_id}",
+        json=SUBMENU_DATA_UPDATE)
     assert response.status_code == 200
-    assert menu.description == SUBMENU_DATA_UPDATE["description"]
-    assert menu.title == SUBMENU_DATA_UPDATE["title"]
+    assert submenu.description == SUBMENU_DATA_UPDATE["description"]
+    assert submenu.title == SUBMENU_DATA_UPDATE["title"]
 
 
-def test_delete_menu(test_app, menu):
-    assert menu.title == "Test Menu"
-    assert menu.description == "Test Description"
-    response = test_app.delete(f"/api/v1/menus/{menu.id}")
+def test_delete_submenu(test_app, menu, submenu):
+    menu_id = menu.id
+    submenu_id = submenu.id
+    response = test_app.delete(
+        f"/api/v1/menus/{menu_id}/submenus/{submenu_id}")
     assert response.status_code == 200
     assert response.json() is None
+    submenus = test_app.get(f"/api/v1/menus/{menu_id}/submenus")
+    assert not submenus.json()
+
+
+# def test_delete_submenu_with_menu(test_app, menu, submenu):
+#     menu_id = menu.id
+#     response = test_app.delete(f"/api/v1/menus/{menu.id}")
+#     assert response.status_code == 200
+#     assert response.json() is None
+#     submenus = test_app.get(f"/api/v1/menus/{menu_id}/submenus")
+#     assert not submenus.json()

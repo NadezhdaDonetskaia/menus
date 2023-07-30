@@ -25,7 +25,7 @@ def test_get_menu(test_app, menu):
     assert response.json()["description"] == MENU_DATA["description"]
 
 
-def test_update_menu(test_app, menu, test_db):
+def test_update_menu(test_app, menu):
     menu_id = menu.id
     response = test_app.patch(f"/api/v1/menus/{menu_id}",
                               json=MENU_DATA_UPDATE)
@@ -35,8 +35,8 @@ def test_update_menu(test_app, menu, test_db):
 
 
 def test_delete_menu(test_app, menu):
-    assert menu.title == "Test Menu"
-    assert menu.description == "Test Description"
     response = test_app.delete(f"/api/v1/menus/{menu.id}")
     assert response.status_code == 200
     assert response.json() is None
+    menus = test_app.get("/api/v1/menus")
+    assert not menus.json()

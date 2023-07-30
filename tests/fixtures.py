@@ -5,3 +5,9 @@ SUBMENU_DATA = {"title": "Test SubMenu",
                 "description": "Test Description SubMenu"}
 SUBMENU_DATA_UPDATE = {"title": "Test SubMenu updat",
                        "description": "Test SubMenu Description update"}
+DISH_DATA = {"title": "Test Dish",
+             "description": "Test Description Dish",
+             "price": "150.50"}
+DISH_DATA_UPDATE = {"title": "Test Dish updat",
+                    "description": "Test Dish Description update",
+                    "price": "170.99"}
