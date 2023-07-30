@@ -29,7 +29,7 @@ def get_submenus(menu_id: str, db=db):
 def create_submenu(menu_id: str,
                    submenu_data: SubMenuChange,
                    db=db):
-    new_submenu = SubMenu(**submenu_data.dict(),
+    new_submenu = SubMenu(**submenu_data.model_dump(),
                           id=uuid.uuid4(),
                           menu_id=menu_id)
     db.add(new_submenu)
@@ -59,7 +59,7 @@ def update_submenu(submenu_id: str,
     if not submenu:
         raise HTTPException(status_code=404, detail="submenu not found")
 
-    for key, value in submenu_data.dict().items():
+    for key, value in submenu_data.model_dump().items():
         setattr(submenu, key, value)
 
     db.commit()

@@ -6,8 +6,8 @@ class BaseDish(BaseModel):
     description: str
     price: str
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class DishChange(BaseDish):

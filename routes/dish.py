@@ -25,7 +25,7 @@ def get_dishes(submenu_id: str, db=db):
 def create_dish(submenu_id: str,
                 dish_data: DishChange,
                 db=db):
-    new_dish = Dish(**dish_data.dict(),
+    new_dish = Dish(**dish_data.model_dump(),
                     id=uuid.uuid4(),
                     submenu_id=submenu_id)
     db.add(new_dish)
@@ -56,7 +56,7 @@ def update_dish(dish_id: str,
     if not dish:
         raise HTTPException(status_code=404, detail="dish not found")
 
-    for key, value in dish_data.dict().items():
+    for key, value in dish_data.model_dump().items():
         setattr(dish, key, value)
 
     db.commit()

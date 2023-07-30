@@ -5,8 +5,8 @@ class BaseMenu(BaseModel):
     title: str
     description: str
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class MenuChange(BaseMenu):

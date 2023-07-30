@@ -24,7 +24,7 @@ def get_menus(db=db):
 
 @router.post('/api/v1/menus', status_code=201)
 def create_menu(menu_data: MenuChange, db=db):
-    new_menu = Menu(**menu_data.dict(), id=uuid.uuid4())
+    new_menu = Menu(**menu_data.model_dump(), id=uuid.uuid4())
     db.add(new_menu)
     db.commit()
     db.refresh(new_menu)
@@ -47,7 +47,7 @@ def update_menu(menu_id: str,
     if not menu:
         raise HTTPException(status_code=404, detail="menu not found")
 
-    for key, value in menu_data.dict().items():
+    for key, value in menu_data.model_dump().items():
         setattr(menu, key, value)
 
     db.commit()
