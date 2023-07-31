@@ -2,10 +2,13 @@ from config import db_url
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = db_url
+
+def get_db_url():
+    return db_url
+
 
 engine = create_engine(
-    DATABASE_URL,
+    get_db_url(),
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

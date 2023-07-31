@@ -46,5 +46,19 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
 docker-compose down
 ```
 
+### Как запустить тесты:
+1. Переименовать .env_example в .env и прописать свои переменные для postgres. Что вы создали тестовую БД
+
+2. Сборка тестового образа:
+```
+docker-compose -f docker-compose.tests.yml build
+```
+3. Запуск тестового образа:
+```
+docker-compose -f docker-compose.tests.yml up  --abort-on-container-exit
+```
+Контейнер остановиться автоматически после прогона тестов
+
+< ------------------------------------------- >
 
 Результаты тестов postman [тут](<menu app.postman_test_run.json>)

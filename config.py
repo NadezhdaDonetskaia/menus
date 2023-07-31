@@ -13,7 +13,7 @@ DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
 
-db_url_test = os.getenv("DB_USER_TEST")
+db_url_test = os.getenv("DATABASE_URL_TEST")
 
 DB_USER_TEST = os.getenv("DB_USER_TEST")
 DB_PASSWORD_TEST = os.getenv("DB_USER_TEST")

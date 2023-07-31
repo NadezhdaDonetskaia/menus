@@ -7,7 +7,6 @@ services:
         condition: service_healthy
     ports:
       - 8000:8000
-    # user: "${UID}:${GID}"
     volumes:
       - .:/srv/application/menus_ylab
     entrypoint: "/srv/application/menus_ylab/docker-entrypoint.dev.sh"

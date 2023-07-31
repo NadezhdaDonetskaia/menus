@@ -14,4 +14,4 @@ WORKDIR /srv/application/menus_ylab
 # Install application
 RUN poetry install --with=dev
 
-ENTRYPOINT [ "/srv/application/menus_ylab/docker-entrypoint.sh" ]
+ENTRYPOINT [ "/srv/application/menus_ylab/docker-entrypoint.tests.sh" ]

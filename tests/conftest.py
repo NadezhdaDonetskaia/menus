@@ -7,14 +7,21 @@ from models.menu import Menu
 from models.submenu import SubMenu
 from models.dish import Dish
 from main import app
-from database import BaseDBModel, get_db
+from database import BaseDBModel, get_db, get_db_url
 from .fixtures import MENU_DATA, SUBMENU_DATA, DISH_DATA, DISH_DATA2
+from config import db_url_test
+
+
+def override_get_db_url():
+    return db_url_test
+
+
+app.dependency_overrides[get_db_url] = override_get_db_url
 
 
 @pytest.fixture
 def test_db():
-    engine = create_engine(
-        "postgresql://postgres:postgres@localhost:5432/menu")
+    engine = create_engine(override_get_db_url())
     TestingSessionLocal = sessionmaker(autocommit=False,
                                        autoflush=False,
                                        bind=engine)
