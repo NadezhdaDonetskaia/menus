@@ -14,7 +14,6 @@ class MenuService:
         self.menu_repository = menu_repository
         self.cache_name = MENU_CACHE_NAME
         self._redis = CacheRepository().get_redis()
-        self._redis.set(self.cache_name, [])
 
     def create(self, menu_data: MenuChange) -> Menu:
         new_menu = self.menu_repository.create(menu_data)
@@ -40,7 +39,7 @@ class MenuService:
 
     def get_by_id(self, menu_id: UUID) -> Menu:
         if self._redis.exists(f'{self.cache_name}{menu_id}'):
-            return self._redis.get(f'{self.cache_name} {menu_id}')
+            return self._redis.get(f'{self.cache_name}{menu_id}')
         menu = self.menu_repository.get_by_id(menu_id)
         self._redis.set(f'{self.cache_name}{menu_id}', menu)
         return menu

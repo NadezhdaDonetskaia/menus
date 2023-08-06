@@ -39,7 +39,7 @@ repos:
     rev: 6.0.0
     hooks:
     -   id: flake8
-        exclude: "__init__.py"
+        exclude: "(^migrations/.*|__init__.py)"
         args: ["--ignore=E501,F821", "--max-line-length=120"]
 
 # Проверка статических типов с помощью mypy
@@ -47,5 +47,5 @@ repos:
     rev: v0.991
     hooks:
     -   id: mypy
-        exclude: '(migrations|tests)'
+        exclude: '(^migrations/.*|tests)'
         additional_dependencies: [types-requests, types-redis]

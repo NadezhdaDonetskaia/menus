@@ -61,4 +61,15 @@ docker-compose -f docker-compose.tests.yml up  --abort-on-container-exit
 
 < ------------------------------------------- >
 
+### Спецификация OpenAPI
+
+Спецификацию можно посмотреть после запуска приложения по адресу
+http://localhost:8000/docs
+или
+http://localhost:8000/redoc
+
+Также можно посмотреть на https://editor-next.swagger.io/ загрузив [файл](openapi.json)
+
+![Alt text](Open_API.png)
+
 Результаты тестов postman [тут](<menu app.postman_test_run.json>)

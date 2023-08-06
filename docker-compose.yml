@@ -16,8 +16,6 @@ services:
     ports:
       - '6379:6379'
     command: redis-server
-    # volumes:
-    #   - cache:/data
 
   db:
     image: postgres:15

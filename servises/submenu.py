@@ -35,11 +35,11 @@ class SubMenuService:
         self._redis.delete(MENU_CACHE_NAME)
         return update_submenu
 
-    def get_all(self, munu_id: UUID) -> list[SubMenuShow]:
-        key_submenus = f'{MENU_CACHE_NAME}{munu_id}{self.cache_name}'
+    def get_all(self, menu_id: UUID) -> list[SubMenuShow]:
+        key_submenus = f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}'
         if self._redis.exists(key_submenus):
-            self._redis.get(key_submenus)
-        submenus = self.submenu_repository.get_all(munu_id)
+            return self._redis.get(key_submenus)
+        submenus = self.submenu_repository.get_all(menu_id)
         self._redis.set(key_submenus, submenus)
         return submenus
 

@@ -40,7 +40,7 @@ class DishService:
     def get_all(self, submenu_id: UUID) -> list[DishShow]:
         key_dish = f'{SUBMENU_CACHE_NAME}{submenu_id}{self.cache_name}'
         if self._redis.exists(key_dish):
-            self._redis.get(key_dish)
+            return self._redis.get(key_dish)
         dishes = self.dish_repository.get_all(submenu_id)
         self._redis.set(key_dish, dishes)
         return dishes

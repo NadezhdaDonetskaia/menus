@@ -3,6 +3,8 @@ import json
 from fastapi.encoders import jsonable_encoder
 from redis import Redis
 
+from config import REDIS_HOST, REDIS_PORT
+
 MENU_CACHE_NAME = 'menu'
 SUBMENU_CACHE_NAME = 'submenu'
 DISH_CACHE_NAME = 'dish'
@@ -10,7 +12,8 @@ DISH_CACHE_NAME = 'dish'
 
 class CacheRepository:
     def __init__(self):
-        self.redis = Redis(host='localhost', port=6379, decode_responses=True)
+        self.redis = Redis(host=REDIS_HOST, port=REDIS_PORT,
+                           decode_responses=True)
 
     def get_redis(self):
         return self
@@ -18,6 +21,7 @@ class CacheRepository:
     def set(self, key, data):
         json_data = json.dumps(jsonable_encoder(data))
         self.redis.set(key, json_data)
+        return json_data
 
     def get(self, key):
         json_data = self.redis.get(key)

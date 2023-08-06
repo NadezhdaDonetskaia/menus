@@ -10,9 +10,9 @@ from .submenu import SubMenu
 class Menu(BaseDBModel):
     __tablename__ = 'menus'
 
-    id = Column(UUID, primary_key=True, index=True)
-    title = Column(String(64), unique=True, index=True)
-    description = Column(String(128))
+    id: UUID = Column(UUID, primary_key=True, index=True)
+    title: str = Column(String(64), unique=True, index=True)
+    description: str = Column(String(128))
 
     submenus = relationship('SubMenu', back_populates='menu',
                             cascade='all, delete-orphan')

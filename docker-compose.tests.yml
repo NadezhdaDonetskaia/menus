@@ -7,6 +7,15 @@ services:
     depends_on:
       - host_test
 
+  redis-cache:
+    image: redis:alpine
+    hostname: redis-cache
+    container_name: redis-cache
+    restart: on-failure
+    ports:
+      - '6379:6379'
+    command: redis-server
+
   host_test:
     image: postgres:15
     environment:
