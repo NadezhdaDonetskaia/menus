@@ -21,6 +21,7 @@ pytest = "^7.4.0"
 httpx = "^0.24.1"
 pytest-postgresql = "^5.0.0"
 testcontainers = "^3.7.1"
+pre-commit = "^3.3.3"
 
 [build-system]
 requires = ["poetry-core"]
