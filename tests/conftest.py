@@ -1,15 +1,18 @@
+import uuid
+
 import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from fastapi.testclient import TestClient
-import uuid
+
+from config import db_url_test
+from database import BaseDBModel, get_db, get_db_url
+from main import app
+from models.dish import Dish
 from models.menu import Menu
 from models.submenu import SubMenu
-from models.dish import Dish
-from main import app
-from database import BaseDBModel, get_db, get_db_url
-from .fixtures import MENU_DATA, SUBMENU_DATA, DISH_DATA, DISH_DATA2
-from config import db_url_test
+
+from .fixtures import DISH_DATA, DISH_DATA2, MENU_DATA, SUBMENU_DATA
 
 
 def override_get_db_url():

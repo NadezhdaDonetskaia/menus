@@ -1,11 +1,10 @@
-from sqlalchemy import Column, String, UUID
-from sqlalchemy import func, select
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import relationship
+from sqlalchemy import UUID, Column, String, func, select
+from sqlalchemy.orm import column_property, relationship
 
-from .submenu import SubMenu
-from .dish import Dish
 from database import BaseDBModel
+
+from .dish import Dish
+from .submenu import SubMenu
 
 
 class Menu(BaseDBModel):
@@ -15,8 +14,8 @@ class Menu(BaseDBModel):
     title = Column(String(64), unique=True, index=True)
     description = Column(String(128))
 
-    submenus = relationship("SubMenu", back_populates="menu",
-                            cascade="all, delete-orphan")
+    submenus = relationship('SubMenu', back_populates='menu',
+                            cascade='all, delete-orphan')
 
     submenus_count = column_property(
         select(func.count(SubMenu.id)).where(
