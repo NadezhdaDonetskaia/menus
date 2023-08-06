@@ -48,3 +48,4 @@ repos:
     hooks:
     -   id: mypy
         exclude: '(migrations|tests)'
+        additional_dependencies: [types-requests, types-redis]

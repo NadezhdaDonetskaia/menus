@@ -1,6 +1,6 @@
 from uuid import UUID, uuid4
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -27,7 +27,8 @@ class SubMenuRepository:
         submenu = self.session.query(SubMenu).filter(
             SubMenu.id == submenu_id, SubMenu.menu_id == menu_id).first()
         if not submenu:
-            raise HTTPException(status_code=404, detail='submenu not found')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail='submenu not found')
         return submenu
 
     def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenu:
@@ -39,11 +40,13 @@ class SubMenuRepository:
         self.session.refresh(new_submenu)
         return new_submenu
 
-    def update(self, menu_id: UUID, submenu_id: UUID, submenu_data: SubMenuChange) -> SubMenu:
+    def update(self, menu_id: UUID, submenu_id: UUID,
+               submenu_data: SubMenuChange) -> SubMenu:
         submenu = self.session.query(SubMenu).filter(
             SubMenu.id == submenu_id, SubMenu.menu_id == menu_id).first()
         if not submenu:
-            raise HTTPException(status_code=404, detail='submenu not found')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail='submenu not found')
 
         for key, value in submenu_data.model_dump().items():
             setattr(submenu, key, value)
@@ -57,7 +60,8 @@ class SubMenuRepository:
         submenu = self.session.query(SubMenu).filter(
             SubMenu.id == submenu_id, SubMenu.menu_id == menu_id).first()
         if not submenu:
-            raise HTTPException(status_code=404, detail='submenu not found')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail='submenu not found')
 
         self.session.delete(submenu)
         self.session.commit()

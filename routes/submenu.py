@@ -1,12 +1,12 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 
-from repositories.submenu import SubMenuRepository
 from schemas.submenu import SubMenuChange, SubMenuShow
+from servises.submenu import SubMenuService
 
 router = APIRouter()
-SUBMENU = Depends(SubMenuRepository)
+SUBMENU = Depends(SubMenuService)
 
 
 @router.get(
@@ -17,7 +17,8 @@ def get_submenus(menu_id: UUID, submenu=SUBMENU):
     return submenu.get_all(menu_id)
 
 
-@router.post('/api/v1/menus/{menu_id}/submenus', status_code=201)
+@router.post('/api/v1/menus/{menu_id}/submenus',
+             status_code=status.HTTP_201_CREATED)
 def create_submenu(menu_id: UUID,
                    submenu_data: SubMenuChange,
                    submenu=SUBMENU):

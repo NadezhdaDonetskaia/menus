@@ -1,6 +1,6 @@
 from uuid import UUID, uuid4
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -26,7 +26,8 @@ class MenuRepository:
     def get_by_id(self, menu_id: UUID) -> Menu:
         menu = self.session.query(Menu).filter(Menu.id == menu_id).first()
         if not menu:
-            raise HTTPException(status_code=404, detail='menu not found')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail='menu not found')
         return menu
 
     def create(self, menu_data: MenuChange) -> Menu:
@@ -39,7 +40,8 @@ class MenuRepository:
     def update(self, menu_id: UUID, menu_data: MenuChange) -> Menu:
         menu = self.session.query(Menu).filter(Menu.id == menu_id).first()
         if not menu:
-            raise HTTPException(status_code=404, detail='menu not found')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail='menu not found')
 
         for key, value in menu_data.model_dump().items():
             setattr(menu, key, value)
@@ -52,7 +54,8 @@ class MenuRepository:
     def delete(self, menu_id: UUID) -> None:
         menu = self.session.query(Menu).filter(Menu.id == menu_id).first()
         if not menu:
-            raise HTTPException(status_code=404, detail='menu not found')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail='menu not found')
 
         self.session.delete(menu)
         self.session.commit()
