@@ -49,12 +49,3 @@ def test_delete_submenu(test_app, menu, submenu):
     assert response.json() is None
     submenus = test_app.get(f"/api/v1/menus/{menu_id}/submenus")
     assert not submenus.json()
-
-
-# def test_delete_submenu_with_menu(test_app, menu, submenu):
-#     menu_id = menu.id
-#     response = test_app.delete(f"/api/v1/menus/{menu.id}")
-#     assert response.status_code == 200
-#     assert response.json() is None
-#     submenus = test_app.get(f"/api/v1/menus/{menu_id}/submenus")
-#     assert not submenus.json()

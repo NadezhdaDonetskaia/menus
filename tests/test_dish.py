@@ -55,15 +55,6 @@ def test_delete_dish(test_app, menu, submenu, dish):
         f"/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}")
     assert response.status_code == 200
     assert response.json() is None
-
-
-# def test_delete_dish_with_menu(test_app, menu, submenu, dish):
-#     menu_id = menu.id
-#     submenu_id = submenu.id
-#     dish_id = dish.id
-#     response = test_app.delete(f"/api/v1/menus/{menu.id}")
-#     assert response.status_code == 200
-#     assert response.json() is None
-#     submenus = test_app.get(
-#         f"/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}")
-#     assert not submenus.json()
+    dish = test_app.get(
+        f"/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes")
+    assert not dish.json()
