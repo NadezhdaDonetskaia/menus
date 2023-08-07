@@ -2,9 +2,8 @@ from uuid import UUID
 
 from fastapi import Depends
 
-from models.submenu import SubMenu
 from repositories.submenu import SubMenuRepository
-from schemas.submenu import SubMenuChange, SubMenuShow
+from schemas.submenu import BaseSubMenu, SubMenuChange, SubMenuCreate, SubMenuShow
 
 from .cache import MENU_CACHE_NAME, SUBMENU_CACHE_NAME, CacheRepository
 
@@ -15,17 +14,18 @@ class SubMenuService:
         self.cache_name = SUBMENU_CACHE_NAME
         self._redis = CacheRepository().get_redis()
 
-    def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenu:
+    def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenuCreate:
         new_submenu = self.submenu_repository.create(menu_id, submenu_data)
         self._redis.set(
             f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}{new_submenu.id}',
             new_submenu)
         self._redis.delete(MENU_CACHE_NAME)
+        self._redis.delete(f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}')
         return new_submenu
 
     def update(self, menu_id: UUID,
                submenu_id: UUID,
-               submenu_data: SubMenuChange) -> SubMenu:
+               submenu_data: SubMenuChange) -> BaseSubMenu:
         update_submenu = self.submenu_repository.update(menu_id,
                                                         submenu_id,
                                                         submenu_data)
@@ -33,6 +33,7 @@ class SubMenuService:
             f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}{submenu_id}',
             update_submenu)
         self._redis.delete(MENU_CACHE_NAME)
+        self._redis.delete(f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}')
         return update_submenu
 
     def get_all(self, menu_id: UUID) -> list[SubMenuShow]:
@@ -43,7 +44,7 @@ class SubMenuService:
         self._redis.set(key_submenus, submenus)
         return submenus
 
-    def get_by_id(self, menu_id: UUID, submenu_id: UUID) -> SubMenu:
+    def get_by_id(self, menu_id: UUID, submenu_id: UUID) -> SubMenuShow:
         key_submenu = f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}{submenu_id}'
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)

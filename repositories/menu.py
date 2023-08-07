@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from models.menu import Menu
-from schemas.menu import MenuChange, MenuShow
+from schemas.menu import BaseMenu, MenuChange, MenuCreate, MenuShow
 
 
 class MenuRepository:
@@ -23,21 +23,23 @@ class MenuRepository:
 
         return menus
 
-    def get_by_id(self, menu_id: UUID) -> Menu:
+    def get_by_id(self, menu_id: UUID) -> MenuShow:
         menu = self.session.query(Menu).filter(Menu.id == menu_id).first()
         if not menu:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail='menu not found')
+        menu.submenus_count = menu.submenus_count
+        menu.dishes_count = menu.dishes_count
         return menu
 
-    def create(self, menu_data: MenuChange) -> Menu:
+    def create(self, menu_data: MenuChange) -> MenuCreate:
         new_menu = Menu(**menu_data.model_dump(), id=uuid4())
         self.session.add(new_menu)
         self.session.commit()
         self.session.refresh(new_menu)
         return new_menu
 
-    def update(self, menu_id: UUID, menu_data: MenuChange) -> Menu:
+    def update(self, menu_id: UUID, menu_data: MenuChange) -> BaseMenu:
         menu = self.session.query(Menu).filter(Menu.id == menu_id).first()
         if not menu:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

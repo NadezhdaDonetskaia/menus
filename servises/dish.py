@@ -2,9 +2,8 @@ from uuid import UUID
 
 from fastapi import Depends
 
-from models.dish import Dish
 from repositories.dish import DishRepository
-from schemas.dish import DishChange, DishShow
+from schemas.dish import BaseDish, DishChange, DishCreate, DishShow
 
 from .cache import DISH_CACHE_NAME, SUBMENU_CACHE_NAME, CacheRepository
 
@@ -17,7 +16,7 @@ class DishService:
 
     def create(self,
                submenu_id: UUID,
-               dish_data: DishChange) -> Dish:
+               dish_data: DishChange) -> DishCreate:
         new_dish = self.dish_repository.create(submenu_id, dish_data)
         self._redis.del_all()
         self._redis.set(
@@ -28,7 +27,7 @@ class DishService:
     def update(self,
                submenu_id: UUID,
                dish_id: UUID,
-               dish_data: DishChange) -> Dish:
+               dish_data: DishChange) -> BaseDish:
         update_dish = self.dish_repository.update(submenu_id,
                                                   dish_id, dish_data)
         self._redis.set(
@@ -45,7 +44,7 @@ class DishService:
         self._redis.set(key_dish, dishes)
         return dishes
 
-    def get_by_id(self, submenu_id: UUID, dish_id: UUID) -> Dish:
+    def get_by_id(self, submenu_id: UUID, dish_id: UUID) -> DishShow:
         key_submenu = f'{SUBMENU_CACHE_NAME}{submenu_id}{self.cache_name}{dish_id}'
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)

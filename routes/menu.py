@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, status
 
-from schemas.menu import BaseMenu, MenuChange, MenuShow
+from schemas.menu import BaseMenu, MenuChange, MenuCreate, MenuShow
 from servises.menu import MenuService
 
 router = APIRouter()
@@ -18,13 +18,13 @@ def get_menus(menu=MENU) -> list[MenuShow]:
 @router.post('/api/v1/menus',
              status_code=status.HTTP_201_CREATED,
              name='create_menu')
-def create_menu(menu_data: MenuChange, menu=MENU) -> BaseMenu:
+def create_menu(menu_data: MenuChange, menu=MENU) -> MenuCreate:
     return menu.create(menu_data)
 
 
 @router.get('/api/v1/menus/{menu_id}',
             name='get_menu')
-def get_menu(menu_id: UUID, menu=MENU) -> BaseMenu:
+def get_menu(menu_id: UUID, menu=MENU) -> MenuShow:
     return menu.get_by_id(menu_id)
 
 

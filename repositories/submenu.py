@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from models.submenu import SubMenu
-from schemas.submenu import SubMenuChange, SubMenuShow
+from schemas.submenu import BaseSubMenu, SubMenuChange, SubMenuCreate, SubMenuShow
 
 
 class SubMenuRepository:
@@ -23,15 +23,16 @@ class SubMenuRepository:
 
         return submenus
 
-    def get_by_id(self, menu_id: UUID, submenu_id: UUID) -> SubMenu:
+    def get_by_id(self, menu_id: UUID, submenu_id: UUID) -> SubMenuShow:
         submenu = self.session.query(SubMenu).filter(
             SubMenu.id == submenu_id, SubMenu.menu_id == menu_id).first()
         if not submenu:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail='submenu not found')
+        submenu.dishes_count = submenu.dishes_count
         return submenu
 
-    def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenu:
+    def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenuCreate:
         new_submenu = SubMenu(**submenu_data.model_dump(),
                               id=uuid4(),
                               menu_id=menu_id)
@@ -41,7 +42,7 @@ class SubMenuRepository:
         return new_submenu
 
     def update(self, menu_id: UUID, submenu_id: UUID,
-               submenu_data: SubMenuChange) -> SubMenu:
+               submenu_data: SubMenuChange) -> BaseSubMenu:
         submenu = self.session.query(SubMenu).filter(
             SubMenu.id == submenu_id, SubMenu.menu_id == menu_id).first()
         if not submenu:

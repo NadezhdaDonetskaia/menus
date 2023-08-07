@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
@@ -10,9 +12,13 @@ class BaseDish(BaseModel):
         from_attributes = True
 
 
+class DishCreate(BaseDish):
+    id: UUID
+
+
 class DishChange(BaseDish):
     pass
 
 
-class DishShow(BaseDish):
+class DishShow(DishCreate):
     pass

@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
@@ -9,9 +11,13 @@ class BaseSubMenu(BaseModel):
         from_attributes = True
 
 
+class SubMenuCreate(BaseSubMenu):
+    id: UUID
+
+
 class SubMenuChange(BaseSubMenu):
     pass
 
 
-class SubMenuShow(BaseSubMenu):
+class SubMenuShow(SubMenuCreate):
     dishes_count: int

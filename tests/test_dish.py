@@ -4,13 +4,17 @@ from .fixtures import DISH_DATA, DISH_DATA_UPDATE
 def test_create_dish(test_app, menu, submenu):
     menu_id = menu.id
     submenu_id = submenu.id
+    list_dishes = test_app.get(f'/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes')
+    assert len(list_dishes.json()) == 0
     response = test_app.post(
         f'/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes',
         json=DISH_DATA)
     assert response.status_code == 201
-    assert len(response.json()) == 1
+    assert 'id' in response.json()
     assert response.json()['title'] == DISH_DATA['title']
     assert response.json()['description'] == DISH_DATA['description']
+    list_dishes = test_app.get(f'/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes')
+    assert len(list_dishes.json()) == 1
 
 
 def test_get_dishes(test_app, menu, submenu, dish):
@@ -31,6 +35,7 @@ def test_get_dish(test_app, menu, submenu, dish):
     response = test_app.get(
         f'/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}')
     assert response.status_code == 200
+    assert response.json()['id'] == str(dish_id)
     assert response.json()['title'] == DISH_DATA['title']
     assert response.json()['description'] == DISH_DATA['description']
 

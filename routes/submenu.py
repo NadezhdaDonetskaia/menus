@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, status
 
-from schemas.submenu import BaseSubMenu, SubMenuChange, SubMenuShow
+from schemas.submenu import BaseSubMenu, SubMenuChange, SubMenuCreate, SubMenuShow
 from servises.submenu import SubMenuService
 
 router = APIRouter()
@@ -23,7 +23,7 @@ def get_submenus(menu_id: UUID, submenu=SUBMENU) -> list[SubMenuShow]:
              name='create_submenu')
 def create_submenu(menu_id: UUID,
                    submenu_data: SubMenuChange,
-                   submenu=SUBMENU) -> BaseSubMenu:
+                   submenu=SUBMENU) -> SubMenuCreate:
     return submenu.create(menu_id, submenu_data)
 
 
@@ -31,7 +31,7 @@ def create_submenu(menu_id: UUID,
             name='get_submenu')
 def get_submenu(submenu_id: UUID,
                 menu_id: UUID,
-                submenu=SUBMENU) -> BaseSubMenu:
+                submenu=SUBMENU) -> SubMenuShow:
     return submenu.get_by_id(menu_id, submenu_id)
 
 
