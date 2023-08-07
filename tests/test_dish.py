@@ -8,7 +8,7 @@ def test_create_dish(test_app, menu, submenu):
         f'/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes',
         json=DISH_DATA)
     assert response.status_code == 201
-    assert 'id' in response.json()
+    assert len(response.json()) == 1
     assert response.json()['title'] == DISH_DATA['title']
     assert response.json()['description'] == DISH_DATA['description']
 
