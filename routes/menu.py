@@ -3,7 +3,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 
 from schemas.menu import BaseMenu, MenuChange, MenuCreate, MenuShow
-from servises.menu import MenuService
+from services.menu import MenuService
 
 router = APIRouter()
 MENU = Depends(MenuService)

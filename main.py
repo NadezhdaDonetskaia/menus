@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 from database import BaseDBModel, engine
 from routes import dish_router, menu_router, sub_menu_router
-from servises.cache import CacheRepository
+from services.cache import CacheRepository
 
 BaseDBModel.metadata.create_all(bind=engine)
 

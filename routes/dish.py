@@ -3,7 +3,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 
 from schemas.dish import BaseDish, DishChange, DishCreate, DishShow
-from servises.dish import DishService
+from services.dish import DishService
 
 router = APIRouter()
 DISH = Depends(DishService)
