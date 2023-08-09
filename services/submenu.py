@@ -5,22 +5,17 @@ from fastapi import Depends
 from repositories.submenu import SubMenuRepository
 from schemas.submenu import BaseSubMenu, SubMenuChange, SubMenuCreate, SubMenuShow
 
-from .cache import MENU_CACHE_NAME, SUBMENU_CACHE_NAME, CacheRepository
+from .cache import MENU_CACHE_NAME, SUBMENU_CACHE_NAME, CacheRepositorySubMenu
 
 
 class SubMenuService:
     def __init__(self, submenu_repository=Depends(SubMenuRepository)):
         self.submenu_repository = submenu_repository
-        self.cache_name = SUBMENU_CACHE_NAME
-        self._redis = CacheRepository().get_redis()
+        self._redis = CacheRepositorySubMenu()
 
     def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenuCreate:
         new_submenu = self.submenu_repository.create(menu_id, submenu_data)
-        self._redis.set(
-            f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}{new_submenu.id}',
-            new_submenu)
-        self._redis.delete(MENU_CACHE_NAME)
-        self._redis.delete(f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}')
+        self._redis.create_update(menu_id, new_submenu.id, submenu_data)
         return new_submenu
 
     def update(self, menu_id: UUID,
@@ -29,15 +24,11 @@ class SubMenuService:
         update_submenu = self.submenu_repository.update(menu_id,
                                                         submenu_id,
                                                         submenu_data)
-        self._redis.set(
-            f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}{submenu_id}',
-            update_submenu)
-        self._redis.delete(MENU_CACHE_NAME)
-        self._redis.delete(f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}')
+        self._redis.create_update(menu_id, submenu_id, update_submenu)
         return update_submenu
 
     def get_all(self, menu_id: UUID) -> list[SubMenuShow]:
-        key_submenus = f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}'
+        key_submenus = f'{MENU_CACHE_NAME}{menu_id}{SUBMENU_CACHE_NAME}'
         if self._redis.exists(key_submenus):
             return self._redis.get(key_submenus)
         submenus = self.submenu_repository.get_all(menu_id)
@@ -45,7 +36,7 @@ class SubMenuService:
         return submenus
 
     def get_by_id(self, menu_id: UUID, submenu_id: UUID) -> SubMenuShow:
-        key_submenu = f'{MENU_CACHE_NAME}{menu_id}{self.cache_name}{submenu_id}'
+        key_submenu = f'{MENU_CACHE_NAME}{menu_id}{SUBMENU_CACHE_NAME}{submenu_id}'
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)
         submenu = self.submenu_repository.get_by_id(menu_id, submenu_id)
@@ -54,4 +45,4 @@ class SubMenuService:
 
     def delete(self, menu_id: UUID, submenu_id: UUID) -> None:
         self.submenu_repository.delete(menu_id, submenu_id)
-        self._redis.del_all()
+        self._redis.delete(menu_id, submenu_id)
