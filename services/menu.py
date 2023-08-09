@@ -16,13 +16,13 @@ class MenuService:
 
     def create(self, menu_data: MenuChange) -> MenuCreate:
         new_menu = self.menu_repository.create(menu_data)
-        self._redis.create_update(new_menu.id, new_menu)
+        self._redis.create_update(menu_id=new_menu.id, menu_data=new_menu)
         return new_menu
 
     def update(self, menu_id: UUID,
                menu_data: MenuChange) -> BaseMenu:
         update_menu = self.menu_repository.update(menu_id, menu_data)
-        self._redis.create_update(menu_id, update_menu)
+        self._redis.create_update(menu_id=menu_id, menu_data=update_menu)
         return update_menu
 
     def get_all(self) -> list[MenuShow]:
@@ -41,4 +41,4 @@ class MenuService:
 
     def delete(self, menu_id: UUID) -> None:
         self.menu_repository.delete(menu_id)
-        self._redis.delete(menu_id)
+        self._redis.delete(menu_id=menu_id)

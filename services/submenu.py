@@ -15,7 +15,7 @@ class SubMenuService:
 
     def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenuCreate:
         new_submenu = self.submenu_repository.create(menu_id, submenu_data)
-        self._redis.create_update(menu_id, new_submenu.id, submenu_data)
+        self._redis.create_update(menu_id, new_submenu.id, new_submenu)
         return new_submenu
 
     def update(self, menu_id: UUID,
