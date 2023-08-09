@@ -36,3 +36,27 @@ class CacheRepository:
 
     def del_all(self):
         self.redis.flushall()
+
+
+class CacheRepositoryMenu(CacheRepository):
+    def create_update(self, menu_id, data):
+        json_data = json.dumps(jsonable_encoder(data))
+        self.redis.set(f'{MENU_CACHE_NAME}{menu_id}',
+                       json_data)
+        self.redis.delete(MENU_CACHE_NAME)
+
+    def delete(self, menu_id):
+        self.redis.delete(MENU_CACHE_NAME)
+        self.redis.delete(f'{MENU_CACHE_NAME}{menu_id}')
+
+
+class CacheRepositorySubMenu(CacheRepositoryMenu):
+    def create_update(self, menu_id, submenu_id, data):
+        return super().create_update(menu_id, submenu_id, data)
+
+    def delete(self, menu_id, submenu_id):
+        return super().delete(menu_id, submenu_id)
+
+
+class CacheRepositoryDish(CacheRepository):
+    pass
