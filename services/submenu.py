@@ -13,7 +13,7 @@ class SubMenuService:
         self.submenu_repository = submenu_repository
         self._redis = CacheRepositorySubMenu()
 
-    def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenuCreate:
+    def create(self, menu_id: UUID, submenu_data: SubMenuChange) -> SubMenuCreate:
         new_submenu = self.submenu_repository.create(menu_id, submenu_data)
         self._redis.create_update(menu_id=menu_id,
                                   submenu_id=new_submenu.id,
