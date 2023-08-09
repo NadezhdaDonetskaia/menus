@@ -19,7 +19,8 @@ class MenuService:
         self._redis.create_update(menu_id=new_menu.id, data=new_menu)
         return new_menu
 
-    def update(self, menu_id: UUID,
+    def update(self,
+               menu_id: UUID,
                menu_data: MenuChange) -> BaseMenu:
         update_menu = self.menu_repository.update(menu_id, menu_data)
         self._redis.create_update(menu_id=menu_id, data=update_menu)

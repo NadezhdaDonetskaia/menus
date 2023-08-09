@@ -17,14 +17,15 @@ DISH_CACHE_NAME = 'dish'
 
 class CacheRepository:
     def __init__(self):
-        self.redis = Redis(host=REDIS_HOST, port=REDIS_PORT,
+        self.redis = Redis(host=REDIS_HOST,
+                           port=REDIS_PORT,
                            decode_responses=True)
 
     def set(self, key: str, data: BaseModel) -> None:
         json_data = json.dumps(jsonable_encoder(data))
         self.redis.set(key, json_data)
 
-    def get(self, key: str) -> BaseModel:
+    def get(self, key: str) -> BaseModel | list[BaseModel]:
         json_data = self.redis.get(key)
         serialized_item_data = json.loads(json_data)
         return serialized_item_data
@@ -54,7 +55,8 @@ class CacheRepositoryMenu(CacheRepository):
 
 
 class CacheRepositorySubMenu(CacheRepositoryMenu):
-    def invalidate_cache(self, **cache_keys: UUID) -> None:
+    def invalidate_cache(self,
+                         **cache_keys: UUID) -> None:
         super().invalidate_cache()
         self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}')
         self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
@@ -86,7 +88,9 @@ class CacheRepositoryDish(CacheRepositorySubMenu):
             f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
             f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}{DISH_CACHE_NAME}')
 
-    def create_update(self, data: DishChange, **cache_keys: UUID) -> None:
+    def create_update(self,
+                      data: DishChange,
+                      **cache_keys: UUID) -> None:
         json_data = json.dumps(jsonable_encoder(data))
         self.invalidate_cache(**cache_keys)
         self.redis.set(

@@ -42,23 +42,35 @@ class DishService:
                                   data=update_dish)
         return update_dish
 
-    def get_all(self, menu_id: UUID, submenu_id: UUID) -> list[DishShow]:
-        key_dish = f'{MENU_CACHE_NAME}{menu_id}{SUBMENU_CACHE_NAME}{submenu_id}{DISH_CACHE_NAME}'
+    def get_all(self,
+                menu_id: UUID,
+                submenu_id: UUID) -> list[DishShow]:
+        key_dish = f'{MENU_CACHE_NAME}{menu_id}' \
+                   f'{SUBMENU_CACHE_NAME}{submenu_id}' \
+                   f'{DISH_CACHE_NAME}'
         if self._redis.exists(key_dish):
             return self._redis.get(key_dish)
         dishes = self.dish_repository.get_all(submenu_id)
         self._redis.set(key=key_dish, data=dishes)
         return dishes
 
-    def get_by_id(self, menu_id: UUID, submenu_id: UUID, dish_id: UUID) -> DishShow:
-        key_submenu = f'{MENU_CACHE_NAME}{menu_id}{SUBMENU_CACHE_NAME}{submenu_id}{DISH_CACHE_NAME}{dish_id}'
+    def get_by_id(self,
+                  menu_id: UUID,
+                  submenu_id: UUID,
+                  dish_id: UUID) -> DishShow:
+        key_submenu = f'{MENU_CACHE_NAME}{menu_id}' \
+                      f'{SUBMENU_CACHE_NAME}{submenu_id}' \
+                      f'{DISH_CACHE_NAME}{dish_id}'
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)
         submenu = self.dish_repository.get_by_id(submenu_id, dish_id)
         self._redis.set(key=key_submenu, data=submenu)
         return submenu
 
-    def delete(self, menu_id: UUID, submenu_id: UUID, dish_id: UUID) -> None:
+    def delete(self,
+               menu_id: UUID,
+               submenu_id: UUID,
+               dish_id: UUID) -> None:
         self.dish_repository.delete(submenu_id, dish_id)
         self._redis.delete(menu_id=menu_id,
                            submenu_id=submenu_id,
