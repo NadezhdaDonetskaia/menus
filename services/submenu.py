@@ -40,7 +40,8 @@ class SubMenuService:
         return submenus
 
     def get_by_id(self, menu_id: UUID, submenu_id: UUID) -> SubMenuShow:
-        key_submenu = f'{MENU_CACHE_NAME}{menu_id}{SUBMENU_CACHE_NAME}{submenu_id}'
+        key_submenu = f'{MENU_CACHE_NAME}{menu_id}' \
+                      f'{SUBMENU_CACHE_NAME}{submenu_id}'
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)
         submenu = self.submenu_repository.get_by_id(menu_id, submenu_id)

@@ -57,7 +57,8 @@ class CacheRepositorySubMenu(CacheRepositoryMenu):
     def invalidate_cache(self, **cache_keys: UUID) -> None:
         super().invalidate_cache()
         self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}')
-        self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}{SUBMENU_CACHE_NAME}')
+        self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
+                          f'{SUBMENU_CACHE_NAME}')
 
     def create_update(self,
                       data: SubMenuChange,
@@ -66,29 +67,37 @@ class CacheRepositorySubMenu(CacheRepositoryMenu):
         json_data = json.dumps(jsonable_encoder(data))
         self.invalidate_cache(**cache_keys)
         self.redis.set(
-            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}',
+            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
+            f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}',
             json_data)
 
     def delete(self, **cache_keys: UUID) -> None:
         self.invalidate_cache(**cache_keys)
-        self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}')
+        self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
+                          f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}')
 
 
 class CacheRepositoryDish(CacheRepositorySubMenu):
     def invalidate_cache(self, **cache_keys: UUID) -> None:
         super().invalidate_cache(**cache_keys)
-        self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}')
+        self.redis.delete(f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
+                          f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}')
         self.redis.delete(
-            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}{DISH_CACHE_NAME}')
+            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
+            f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}{DISH_CACHE_NAME}')
 
     def create_update(self, data: DishChange, **cache_keys: UUID) -> None:
         json_data = json.dumps(jsonable_encoder(data))
         self.invalidate_cache(**cache_keys)
         self.redis.set(
-            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}{DISH_CACHE_NAME}{cache_keys["dish_id"]}',
+            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
+            f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}'
+            f'{DISH_CACHE_NAME}{cache_keys["dish_id"]}',
             json_data)
 
     def delete(self, **cache_keys: UUID) -> None:
         self.invalidate_cache(**cache_keys)
         self.redis.delete(
-            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}{DISH_CACHE_NAME}{cache_keys["dish_id"]}')
+            f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
+            f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}'
+            f'{DISH_CACHE_NAME}{cache_keys["dish_id"]}')
