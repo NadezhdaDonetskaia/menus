@@ -29,7 +29,7 @@ class DishRepository:
                                 detail='dish not found')
         return dish
 
-    def create(self, submenu_id, dish_data: DishChange) -> DishCreate:
+    def create(self, submenu_id: UUID, dish_data: DishChange) -> DishCreate:
         new_dish = Dish(**dish_data.model_dump(),
                         id=uuid4(),
                         submenu_id=submenu_id)

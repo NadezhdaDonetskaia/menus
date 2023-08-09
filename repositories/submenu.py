@@ -32,7 +32,7 @@ class SubMenuRepository:
         submenu.dishes_count = submenu.dishes_count
         return submenu
 
-    def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenuCreate:
+    def create(self, menu_id: UUID, submenu_data: SubMenuChange) -> SubMenuCreate:
         new_submenu = SubMenu(**submenu_data.model_dump(),
                               id=uuid4(),
                               menu_id=menu_id)
