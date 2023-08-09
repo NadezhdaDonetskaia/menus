@@ -15,7 +15,9 @@ class SubMenuService:
 
     def create(self, menu_id, submenu_data: SubMenuChange) -> SubMenuCreate:
         new_submenu = self.submenu_repository.create(menu_id, submenu_data)
-        self._redis.create_update(menu_id, new_submenu.id, new_submenu)
+        self._redis.create_update(menu_id=menu_id,
+                                  submenu_id=new_submenu.id,
+                                  data=new_submenu)
         return new_submenu
 
     def update(self, menu_id: UUID,
@@ -24,7 +26,9 @@ class SubMenuService:
         update_submenu = self.submenu_repository.update(menu_id,
                                                         submenu_id,
                                                         submenu_data)
-        self._redis.create_update(menu_id, submenu_id, update_submenu)
+        self._redis.create_update(menu_id=menu_id,
+                                  submenu_id=submenu_id,
+                                  data=update_submenu)
         return update_submenu
 
     def get_all(self, menu_id: UUID) -> list[SubMenuShow]:
@@ -32,7 +36,7 @@ class SubMenuService:
         if self._redis.exists(key_submenus):
             return self._redis.get(key_submenus)
         submenus = self.submenu_repository.get_all(menu_id)
-        self._redis.set(key_submenus, submenus)
+        self._redis.set(key=key_submenus, data=submenus)
         return submenus
 
     def get_by_id(self, menu_id: UUID, submenu_id: UUID) -> SubMenuShow:
@@ -40,9 +44,9 @@ class SubMenuService:
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)
         submenu = self.submenu_repository.get_by_id(menu_id, submenu_id)
-        self._redis.set(key_submenu, submenu)
+        self._redis.set(key=key_submenu, data=submenu)
         return submenu
 
     def delete(self, menu_id: UUID, submenu_id: UUID) -> None:
         self.submenu_repository.delete(menu_id, submenu_id)
-        self._redis.delete(menu_id, submenu_id)
+        self._redis.delete(menu_id=menu_id, submenu_id=submenu_id)

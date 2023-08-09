@@ -23,7 +23,10 @@ class DishService:
                submenu_id: UUID,
                dish_data: DishChange) -> DishCreate:
         new_dish = self.dish_repository.create(submenu_id, dish_data)
-        self._redis.create_update(menu_id, submenu_id, new_dish.id, new_dish)
+        self._redis.create_update(menu_id=menu_id,
+                                  submenu_id=submenu_id,
+                                  dish_id=new_dish.id,
+                                  data=new_dish)
         return new_dish
 
     def update(self,
@@ -33,7 +36,10 @@ class DishService:
                dish_data: DishChange) -> BaseDish:
         update_dish = self.dish_repository.update(submenu_id,
                                                   dish_id, dish_data)
-        self._redis.create_update(menu_id, submenu_id, dish_id, update_dish)
+        self._redis.create_update(menu_id=menu_id,
+                                  submenu_id=submenu_id,
+                                  dish_id=dish_id,
+                                  data=update_dish)
         return update_dish
 
     def get_all(self, menu_id: UUID, submenu_id: UUID) -> list[DishShow]:
@@ -41,7 +47,7 @@ class DishService:
         if self._redis.exists(key_dish):
             return self._redis.get(key_dish)
         dishes = self.dish_repository.get_all(submenu_id)
-        self._redis.set(key_dish, dishes)
+        self._redis.set(key=key_dish, data=dishes)
         return dishes
 
     def get_by_id(self, menu_id: UUID, submenu_id: UUID, dish_id: UUID) -> DishShow:
@@ -49,9 +55,11 @@ class DishService:
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)
         submenu = self.dish_repository.get_by_id(submenu_id, dish_id)
-        self._redis.set(key_submenu, submenu)
+        self._redis.set(key=key_submenu, data=submenu)
         return submenu
 
     def delete(self, menu_id: UUID, submenu_id: UUID, dish_id: UUID) -> None:
         self.dish_repository.delete(submenu_id, dish_id)
-        self._redis.delete(menu_id, submenu_id, dish_id)
+        self._redis.delete(menu_id=menu_id,
+                           submenu_id=submenu_id,
+                           dish_id=dish_id)
