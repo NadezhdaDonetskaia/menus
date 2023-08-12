@@ -12,13 +12,5 @@ class BaseDish(BaseModel):
         from_attributes = True
 
 
-class DishCreate(BaseDish):
+class DishShow(BaseDish):
     id: UUID
-
-
-class DishChange(BaseDish):
-    pass
-
-
-class DishShow(DishCreate):
-    pass

@@ -1,4 +1,4 @@
-from .fixtures import DISH_DATA, DISH_DATA_UPDATE
+from tests.fixtures import DISH_DATA, DISH_DATA_UPDATE
 
 
 def test_create_dish(test_app, menu, submenu):

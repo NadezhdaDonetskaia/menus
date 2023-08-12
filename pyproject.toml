@@ -10,11 +10,11 @@ python = "^3.10"
 fastapi = "^0.100.0"
 uvicorn = "^0.23.1"
 sqlalchemy = "^2.0.19"
-psycopg2 = "^2.9.6"
 alembic = "^1.11.1"
 python-dotenv = "^1.0.0"
 pydantic = "^2.0.3"
 redis = "^4.6.0"
+asyncpg = "^0.28.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -23,6 +23,8 @@ httpx = "^0.24.1"
 pytest-postgresql = "^5.0.0"
 testcontainers = "^3.7.1"
 pre-commit = "^3.3.3"
+logger = "^1.4"
+pytest-asyncio = "^0.21.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -33,3 +35,4 @@ build-backend = "poetry.core.masonry.api"
 pythonpath = [
   ".",
 ]
+asyncio_mode="auto"

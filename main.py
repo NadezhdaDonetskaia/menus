@@ -1,14 +1,23 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import ValidationException
+from fastapi.responses import JSONResponse
 
-from database import BaseDBModel, engine
 from routes import dish_router, menu_router, sub_menu_router
 from services.cache import CacheRepository
 
-BaseDBModel.metadata.create_all(bind=engine)
+app = FastAPI(
+    title='Menus App'
+)
 
 
-app = FastAPI()
+@app.exception_handler(ValidationException)
+async def validation_exeption_handler(request: Request, exc: ValidationException):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content=jsonable_encoder({'detail': exc.errors})
+    )
 
 
 app.include_router(menu_router)

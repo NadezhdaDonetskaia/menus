@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy import UUID, Column, String, func, select
 from sqlalchemy.orm import column_property, relationship
 
@@ -10,7 +12,7 @@ from .submenu import SubMenu
 class Menu(BaseDBModel):
     __tablename__ = 'menus'
 
-    id: UUID = Column(UUID, primary_key=True, index=True)
+    id: UUID = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     title: str = Column(String(64), unique=True, index=True)
     description: str = Column(String(128))
 

@@ -1,4 +1,4 @@
-from .fixtures import SUBMENU_DATA, SUBMENU_DATA_UPDATE
+from tests.fixtures import SUBMENU_DATA, SUBMENU_DATA_UPDATE
 
 
 def test_create_submenu(test_app, menu):

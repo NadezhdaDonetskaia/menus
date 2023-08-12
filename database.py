@@ -1,5 +1,12 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from typing import AsyncGenerator
+
+from sqlalchemy.ext.asyncio import (
+    AsyncAttrs,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+from sqlalchemy.orm import DeclarativeBase
 
 from config import db_url
 
@@ -8,17 +15,23 @@ def get_db_url():
     return db_url
 
 
-engine = create_engine(
+async_engine = create_async_engine(
     get_db_url(),
+    echo=True,
 )
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-BaseDBModel = declarative_base()
+async_session = async_sessionmaker(async_engine,
+                                   class_=AsyncSession,
+                                   expire_on_commit=False)
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+class BaseDBModel(AsyncAttrs, DeclarativeBase):
+    pass
+
+
+metadata = BaseDBModel.metadata
+
+
+async def get_async_db() -> AsyncGenerator[AsyncSession, None]:
+    async with async_session() as session:
+        yield session

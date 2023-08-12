@@ -11,13 +11,6 @@ class BaseSubMenu(BaseModel):
         from_attributes = True
 
 
-class SubMenuCreate(BaseSubMenu):
+class SubMenuShow(BaseSubMenu):
     id: UUID
-
-
-class SubMenuChange(BaseSubMenu):
-    pass
-
-
-class SubMenuShow(SubMenuCreate):
     dishes_count: int
