@@ -1,56 +1,64 @@
+import pytest
+from logger import logger
+
 from tests.fixtures import SUBMENU_DATA, SUBMENU_DATA_UPDATE
 
 
-def test_create_submenu(test_app, menu):
+@pytest.mark.anyio
+async def test_create_submenu(test_db, menu):
     menu_id = menu.id
-    list_submenus = test_app.get(f'/api/v1/menus/{menu_id}/submenus')
-    assert len(list_submenus.json()) == 0
-    response = test_app.post(f'/api/v1/menus/{menu_id}/submenus',
-                             json=SUBMENU_DATA)
+    response = await test_db.post(f'/menus/{menu_id}/submenus',
+                                  json=SUBMENU_DATA)
+    logger.debug(f'response create submenu {response}')
     assert response.status_code == 201
     assert 'id' in response.json()
     assert response.json()['title'] == SUBMENU_DATA['title']
     assert response.json()['description'] == SUBMENU_DATA['description']
-    list_submenus = test_app.get(f'/api/v1/menus/{menu_id}/submenus')
+    list_submenus = await test_db.get(f'/menus/{menu_id}/submenus')
     assert len(list_submenus.json()) == 1
 
 
-def test_get_submenus(test_app, menu, submenu):
+@pytest.mark.anyio
+async def test_get_submenus(test_db, menu, submenu):
     menu_id = menu.id
-    response = test_app.get(f'/api/v1/menus/{menu_id}/submenus/')
+    response = await test_db.get(f'/menus/{menu_id}/submenus')
     assert response.status_code == 200
     assert len(response.json()) == 1
     assert response.json()[0]['title'] == SUBMENU_DATA['title']
     assert response.json()[0]['description'] == SUBMENU_DATA['description']
 
 
-def test_get_submenu(test_app, menu, submenu):
+@pytest.mark.anyio
+async def test_get_submenu(test_db, menu, submenu):
     menu_id = menu.id
     submenu_id = submenu.id
-    response = test_app.get(f'/api/v1/menus/{menu_id}/submenus/{submenu_id}')
+    response = await test_db.get(f'/menus/{menu_id}/submenus/{submenu_id}')
     assert response.status_code == 200
     assert response.json()['id'] == str(submenu_id)
     assert response.json()['title'] == SUBMENU_DATA['title']
     assert response.json()['description'] == SUBMENU_DATA['description']
 
 
-def test_update_submenu(test_app, menu, submenu):
+@pytest.mark.anyio
+async def test_update_submenu(test_db, menu, submenu):
     menu_id = menu.id
     submenu_id = submenu.id
-    response = test_app.patch(
-        f'/api/v1/menus/{menu_id}/submenus/{submenu_id}',
+    response = await test_db.patch(
+        f'/menus/{menu_id}/submenus/{submenu_id}',
         json=SUBMENU_DATA_UPDATE)
     assert response.status_code == 200
-    assert submenu.description == SUBMENU_DATA_UPDATE['description']
-    assert submenu.title == SUBMENU_DATA_UPDATE['title']
+    update_submenu = await test_db.get(f'/menus/{menu_id}/submenus/{submenu_id}')
+    assert update_submenu.json()['description'] == SUBMENU_DATA_UPDATE['description']
+    assert update_submenu.json()['title'] == SUBMENU_DATA_UPDATE['title']
 
 
-def test_delete_submenu(test_app, menu, submenu):
+@pytest.mark.anyio
+async def test_delete_submenu(test_db, menu, submenu):
     menu_id = menu.id
     submenu_id = submenu.id
-    response = test_app.delete(
-        f'/api/v1/menus/{menu_id}/submenus/{submenu_id}')
+    response = await test_db.delete(
+        f'/menus/{menu_id}/submenus/{submenu_id}')
     assert response.status_code == 200
-    assert response.json() is None
-    submenus = test_app.get(f'/api/v1/menus/{menu_id}/submenus')
+    assert response.json()['message'] == 'The submenu has been deleted'
+    submenus = await test_db.get(f'/menus/{menu_id}/submenus')
     assert not submenus.json()

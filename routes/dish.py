@@ -14,7 +14,7 @@ DISH = Depends(DishService)
 
 
 @router.get(
-    '/',
+    '',
     response_model=list[DishShow])
 async def get_dishes(menu_id: UUID,
                      submenu_id: UUID,
@@ -22,7 +22,7 @@ async def get_dishes(menu_id: UUID,
     return await dish.get_all(menu_id, submenu_id)
 
 
-@router.post('/',
+@router.post('',
              status_code=status.HTTP_201_CREATED)
 async def create_dish(menu_id: UUID,
                       submenu_id: UUID,

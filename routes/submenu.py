@@ -14,7 +14,7 @@ SUBMENU = Depends(SubMenuService)
 
 
 @router.get(
-    '/',
+    '',
     response_model=list[SubMenuShow],
     name='get_submenus'
 )
@@ -22,7 +22,7 @@ async def get_submenus(menu_id: UUID, submenu=SUBMENU) -> list[SubMenuShow]:
     return await submenu.get_all(menu_id)
 
 
-@router.post('/',
+@router.post('',
              status_code=status.HTTP_201_CREATED,
              name='create_submenu')
 async def create_submenu(menu_id: UUID,
