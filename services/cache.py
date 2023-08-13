@@ -14,6 +14,7 @@ from schemas.submenu import BaseSubMenu, SubMenuShow
 MENU_CACHE_NAME = 'menu'
 SUBMENU_CACHE_NAME = 'submenu'
 DISH_CACHE_NAME = 'dish'
+ALL_CACHE_NAME = 'all'
 
 
 class CacheRepository:
@@ -48,6 +49,7 @@ class CacheRepositoryMenu(CacheRepository):
 
     def invalidate_cache(self, **cache_keys: UUID) -> None:
         self.redis.delete(MENU_CACHE_NAME)
+        self.redis.delete(ALL_CACHE_NAME)
 
     def set_all(self, key: str, data: list[MenuShow] | Any) -> None:
         if data:
@@ -165,3 +167,8 @@ class CacheRepositoryDish(CacheRepositorySubMenu):
             f'{MENU_CACHE_NAME}{cache_keys["menu_id"]}'
             f'{SUBMENU_CACHE_NAME}{cache_keys["submenu_id"]}'
             f'{DISH_CACHE_NAME}{cache_keys["dish_id"]}')
+
+
+class CacheRepositoryAll(CacheRepository):
+
+    pass

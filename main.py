@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import ValidationException
 from fastapi.responses import JSONResponse
 
-from routes import dish_router, menu_router, sub_menu_router
+from routes import all_router, dish_router, menu_router, sub_menu_router
 from tasks.tasks import celery_app
 
 app = FastAPI(
@@ -23,6 +23,7 @@ async def validation_exeption_handler(request: Request, exc: ValidationException
 app.include_router(menu_router)
 app.include_router(sub_menu_router)
 app.include_router(dish_router)
+app.include_router(all_router)
 
 
 app.selery_app = celery_app

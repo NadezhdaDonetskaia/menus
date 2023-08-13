@@ -14,3 +14,33 @@ DISH_DATA_UPDATE = {'title': 'Test Dish updat',
 DISH_DATA2 = {'title': 'Test Dish2',
               'description': 'Test Description Dish2',
               'price': '250.50'}
+
+ALL_DATA = {
+    'Test Menu': {
+        'Test SubMenu': {
+            'Test Dish': {
+                'description': 'Test Description Dish',
+                'price': '150.50'
+            },
+            'Test Dish2': {
+                'description': 'Test Description Dish2',
+                'price': '250.50'
+            },
+            'description': 'Test Description SubMenu'
+        },
+        'description': 'Test Description'
+    },
+}
+
+ALL_DATA_WITHOUT_DISH = {
+    'Test Menu': {
+        'Test SubMenu': {
+            'Test Dish2': {
+                'description': 'Test Description Dish2',
+                'price': '250.50'
+            },
+            'description': 'Test Description SubMenu'
+        },
+        'description': 'Test Description'
+    },
+}

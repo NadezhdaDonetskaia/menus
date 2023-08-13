@@ -19,7 +19,6 @@ from tasks.read_files import get_data_from_excel_file, is_change_file
 relative_path = '../admin/Menu.xlsx'
 current_directory = os.path.dirname(__file__)
 PATH_FIFE_EXCEL = os.path.join(current_directory, relative_path)
-logger.info(f'path for xlsx file: {PATH_FIFE_EXCEL}')
 
 
 # @router.get('')

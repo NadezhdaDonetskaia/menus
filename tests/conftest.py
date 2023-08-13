@@ -76,7 +76,7 @@ async def submenu(test_db, menu) -> SubMenu:
     new_submenu = await test_db.post(
         f'/menus/{menu.id}/submenus',
         json=SUBMENU_DATA)
-    logger.error(f'response conftest create submenu {new_submenu.json()}')
+    logger.debug(f'response conftest create submenu {new_submenu.json()}')
     return SubMenu(**new_submenu.json())
 
 
@@ -87,7 +87,7 @@ async def dish(test_db, menu, submenu):
         f'/menus/{menu.id}/submenus/{submenu.id}/dishes',
         json=DISH_DATA
     )
-    logger.error(f'response conftest create dish {new_dish.json()}')
+    logger.debug(f'response conftest create dish {new_dish.json()}')
     return Dish(**new_dish.json())
 
 

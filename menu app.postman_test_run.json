@@ -1,7 +1,7 @@
 {
-	"id": "3b6b3266-a7f2-4c9d-91d6-a026d70da854",
+	"id": "864786d3-be26-4ac3-8dbd-4a7221877c7f",
 	"name": "menu app",
-	"timestamp": "2023-08-09T10:28:00.764Z",
+	"timestamp": "2023-08-13T21:10:44.461Z",
 	"collection_id": "28676214-e259daa7-7210-48ad-bdea-7dcb8e78065c",
 	"folder_id": "28676214-b474c75e-33b2-4554-8ece-22b40e68851f",
 	"environment_id": "28676214-4ba74afa-38e1-4dba-a211-acc4a26063bf",
@@ -9,14 +9,14 @@
 	"delay": 0,
 	"persist": true,
 	"status": "finished",
-	"startedAt": "2023-08-09T10:27:56.541Z",
+	"startedAt": "2023-08-13T21:10:40.678Z",
 	"totalFail": 0,
 	"results": [
 		{
 			"id": "29b8f35c-9fbd-4e5a-a98d-0719745fc9c9",
 			"name": "Просматривает список меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 14,
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -41,7 +41,7 @@
 				}
 			},
 			"times": [
-				14
+				13
 			],
 			"allTests": [
 				{
@@ -55,7 +55,7 @@
 			"id": "66c8052b-348a-4b99-96da-f2ac1eda0015",
 			"name": "Создает меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 17,
+			"time": 31,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -90,7 +90,7 @@
 				}
 			},
 			"times": [
-				17
+				31
 			],
 			"allTests": [
 				{
@@ -106,7 +106,7 @@
 			"id": "9c8c8b76-4d17-47a8-8544-c677d51f34b1",
 			"name": "Просматривает список меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 13,
+			"time": 16,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -131,7 +131,7 @@
 				}
 			},
 			"times": [
-				13
+				16
 			],
 			"allTests": [
 				{
@@ -144,8 +144,8 @@
 		{
 			"id": "c001a79e-4efc-4894-91cd-01b4301786cd",
 			"name": "Просматривает определенное меню",
-			"url": "127.0.0.1:8000/api/v1/menus/3ef9b0ef-8a0c-4cdf-9faf-07e69215ddee",
-			"time": 11,
+			"url": "127.0.0.1:8000/api/v1/menus/774794de-edf9-475e-bea6-e6608ce2e006",
+			"time": 9,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -180,7 +180,7 @@
 				}
 			},
 			"times": [
-				11
+				9
 			],
 			"allTests": [
 				{
@@ -195,8 +195,8 @@
 		{
 			"id": "c7cea4d9-1d45-48b8-a57b-9a7da76ff3f4",
 			"name": "Обновляет меню",
-			"url": "127.0.0.1:8000/api/v1/menus/3ef9b0ef-8a0c-4cdf-9faf-07e69215ddee",
-			"time": 17,
+			"url": "127.0.0.1:8000/api/v1/menus/774794de-edf9-475e-bea6-e6608ce2e006",
+			"time": 27,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -226,7 +226,7 @@
 				}
 			},
 			"times": [
-				17
+				27
 			],
 			"allTests": [
 				{
@@ -240,8 +240,8 @@
 		{
 			"id": "9ce13b66-1efd-49ab-ac2b-27f93ee67a54",
 			"name": "Просматривает определенное меню",
-			"url": "127.0.0.1:8000/api/v1/menus/3ef9b0ef-8a0c-4cdf-9faf-07e69215ddee",
-			"time": 10,
+			"url": "127.0.0.1:8000/api/v1/menus/774794de-edf9-475e-bea6-e6608ce2e006",
+			"time": 8,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -276,7 +276,7 @@
 				}
 			},
 			"times": [
-				10
+				8
 			],
 			"allTests": [
 				{
@@ -291,8 +291,8 @@
 		{
 			"id": "2e05300b-facd-4e80-b8a9-33281781a5d5",
 			"name": "Удаляет меню",
-			"url": "127.0.0.1:8000/api/v1/menus/3ef9b0ef-8a0c-4cdf-9faf-07e69215ddee",
-			"time": 19,
+			"url": "127.0.0.1:8000/api/v1/menus/774794de-edf9-475e-bea6-e6608ce2e006",
+			"time": 16,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -312,7 +312,7 @@
 				}
 			},
 			"times": [
-				19
+				16
 			],
 			"allTests": [
 				{
@@ -325,7 +325,7 @@
 			"id": "ec76077e-7c7c-44f2-9459-e27d8b58227c",
 			"name": "Просматривает список меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 15,
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -350,7 +350,7 @@
 				}
 			},
 			"times": [
-				15
+				13
 			],
 			"allTests": [
 				{
@@ -363,8 +363,8 @@
 		{
 			"id": "c1b3a92d-a658-46eb-8bb0-5c092fae112c",
 			"name": "Просматривает определенное меню",
-			"url": "127.0.0.1:8000/api/v1/menus/3ef9b0ef-8a0c-4cdf-9faf-07e69215ddee",
-			"time": 13,
+			"url": "127.0.0.1:8000/api/v1/menus/774794de-edf9-475e-bea6-e6608ce2e006",
+			"time": 12,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -389,7 +389,7 @@
 				}
 			},
 			"times": [
-				13
+				12
 			],
 			"allTests": [
 				{
@@ -403,7 +403,7 @@
 			"id": "dadeec93-ba28-4778-9f46-cf960a8572ab",
 			"name": "Создает меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 20,
+			"time": 15,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -428,7 +428,7 @@
 				}
 			},
 			"times": [
-				20
+				15
 			],
 			"allTests": [
 				{
@@ -441,8 +441,8 @@
 		{
 			"id": "f67ca406-8fb5-42fc-8702-ecfb46b45106",
 			"name": "Просматривает список подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus",
-			"time": 15,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus",
+			"time": 23,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -467,7 +467,7 @@
 				}
 			},
 			"times": [
-				15
+				23
 			],
 			"allTests": [
 				{
@@ -480,8 +480,8 @@
 		{
 			"id": "70c1609a-a167-4e53-8356-4727f2e25155",
 			"name": "Создает подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus",
-			"time": 16,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus",
+			"time": 26,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -516,7 +516,7 @@
 				}
 			},
 			"times": [
-				16
+				26
 			],
 			"allTests": [
 				{
@@ -531,7 +531,7 @@
 		{
 			"id": "099443b8-5f2e-4662-8a46-55f56615bf3d",
 			"name": "Просматривает список подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus",
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus",
 			"time": 14,
 			"responseCode": {
 				"code": 200,
@@ -570,8 +570,8 @@
 		{
 			"id": "592bd577-dbec-4f27-b1ec-3b2dc70ba9bb",
 			"name": "Просматривает определенное подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus/69a31bf2-516c-436d-b66e-ef40926156c7",
-			"time": 11,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus/d8fd48ca-7d12-4293-bc75-83dc28044d3d",
+			"time": 8,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -606,7 +606,7 @@
 				}
 			},
 			"times": [
-				11
+				8
 			],
 			"allTests": [
 				{
@@ -621,8 +621,8 @@
 		{
 			"id": "cf111774-1957-43d2-b3a5-fa175081a1ec",
 			"name": "Обновляет подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus/69a31bf2-516c-436d-b66e-ef40926156c7",
-			"time": 22,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus/d8fd48ca-7d12-4293-bc75-83dc28044d3d",
+			"time": 21,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -652,7 +652,7 @@
 				}
 			},
 			"times": [
-				22
+				21
 			],
 			"allTests": [
 				{
@@ -666,8 +666,8 @@
 		{
 			"id": "46ee876b-a0ae-43e4-9363-9f56f10a8835",
 			"name": "Просматривает определенное подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus/69a31bf2-516c-436d-b66e-ef40926156c7",
-			"time": 13,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus/d8fd48ca-7d12-4293-bc75-83dc28044d3d",
+			"time": 8,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -702,7 +702,7 @@
 				}
 			},
 			"times": [
-				13
+				8
 			],
 			"allTests": [
 				{
@@ -717,8 +717,8 @@
 		{
 			"id": "27ccb4c7-85a7-44f8-ab9b-2c1e6ce19026",
 			"name": "Удаляет подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus/69a31bf2-516c-436d-b66e-ef40926156c7",
-			"time": 19,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus/d8fd48ca-7d12-4293-bc75-83dc28044d3d",
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -738,7 +738,7 @@
 				}
 			},
 			"times": [
-				19
+				14
 			],
 			"allTests": [
 				{
@@ -750,8 +750,8 @@
 		{
 			"id": "8460ed73-6364-4303-a4a6-1a6ac0fd3be6",
 			"name": "Просматривает список подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus",
-			"time": 14,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus",
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -776,7 +776,7 @@
 				}
 			},
 			"times": [
-				14
+				13
 			],
 			"allTests": [
 				{
@@ -789,7 +789,7 @@
 		{
 			"id": "90f62d6d-ab08-450c-a5d0-911da0b4bce4",
 			"name": "Просматривает определенное подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a/submenus/69a31bf2-516c-436d-b66e-ef40926156c7",
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0/submenus/d8fd48ca-7d12-4293-bc75-83dc28044d3d",
 			"time": 14,
 			"responseCode": {
 				"code": 404,
@@ -828,8 +828,8 @@
 		{
 			"id": "2e46f57d-720f-407a-8a3d-c8affaa74a87",
 			"name": "Удаляет меню",
-			"url": "127.0.0.1:8000/api/v1/menus/a266d613-1e57-400a-8ad0-39c44d3b012a",
-			"time": 16,
+			"url": "127.0.0.1:8000/api/v1/menus/e90fe9ae-0ef0-4769-9832-19814d1205b0",
+			"time": 17,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -849,7 +849,7 @@
 				}
 			},
 			"times": [
-				16
+				17
 			],
 			"allTests": [
 				{
@@ -862,7 +862,7 @@
 			"id": "3125e52e-f395-437d-aa39-7812b0c9bf78",
 			"name": "Просматривает список меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 14,
+			"time": 16,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -887,7 +887,7 @@
 				}
 			},
 			"times": [
-				14
+				16
 			],
 			"allTests": [
 				{
@@ -901,7 +901,7 @@
 			"id": "62ada5b9-96fb-4ba6-87af-06cdd7c43086",
 			"name": "Создает меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 20,
+			"time": 17,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -926,7 +926,7 @@
 				}
 			},
 			"times": [
-				20
+				17
 			],
 			"allTests": [
 				{
@@ -939,8 +939,8 @@
 		{
 			"id": "eecde422-85e4-4932-a50d-667cf5015268",
 			"name": "Создает подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus",
-			"time": 19,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus",
+			"time": 16,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -965,7 +965,7 @@
 				}
 			},
 			"times": [
-				19
+				16
 			],
 			"allTests": [
 				{
@@ -978,8 +978,8 @@
 		{
 			"id": "95966afc-2c2a-4a01-a9e4-12c50c69cd2c",
 			"name": "Просматривает список блюд",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes",
-			"time": 18,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes",
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1004,7 +1004,7 @@
 				}
 			},
 			"times": [
-				18
+				13
 			],
 			"allTests": [
 				{
@@ -1017,8 +1017,8 @@
 		{
 			"id": "11d98640-7396-4124-9ba3-ed10b3af4ce2",
 			"name": "Создает блюдо",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes",
-			"time": 26,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes",
+			"time": 20,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1058,7 +1058,7 @@
 				}
 			},
 			"times": [
-				26
+				20
 			],
 			"allTests": [
 				{
@@ -1074,8 +1074,8 @@
 		{
 			"id": "9a9f5709-7937-401f-9d7f-d6beb55685a0",
 			"name": "Просматривает список блюд",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes",
-			"time": 13,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes",
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1100,7 +1100,7 @@
 				}
 			},
 			"times": [
-				13
+				14
 			],
 			"allTests": [
 				{
@@ -1113,8 +1113,8 @@
 		{
 			"id": "126f5082-e623-44fe-be2a-f1ad68d82fb3",
 			"name": "Просматривает определенное блюдо",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes/bcd79a45-7947-4e5b-b564-0d1fd692229b",
-			"time": 13,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes/d6d75589-3773-448a-bee0-f6ac025441f3",
+			"time": 8,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1154,7 +1154,7 @@
 				}
 			},
 			"times": [
-				13
+				8
 			],
 			"allTests": [
 				{
@@ -1170,8 +1170,8 @@
 		{
 			"id": "eaea6677-58de-4efa-b869-d8c8a35a3841",
 			"name": "Обновляет блюдо",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes/bcd79a45-7947-4e5b-b564-0d1fd692229b",
-			"time": 24,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes/d6d75589-3773-448a-bee0-f6ac025441f3",
+			"time": 22,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1206,7 +1206,7 @@
 				}
 			},
 			"times": [
-				24
+				22
 			],
 			"allTests": [
 				{
@@ -1221,8 +1221,8 @@
 		{
 			"id": "94d7d59d-fd5d-4094-9dc4-f7a593ccdea8",
 			"name": "Просматривает определенное блюдо",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes/bcd79a45-7947-4e5b-b564-0d1fd692229b",
-			"time": 14,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes/d6d75589-3773-448a-bee0-f6ac025441f3",
+			"time": 9,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1262,7 +1262,7 @@
 				}
 			},
 			"times": [
-				14
+				9
 			],
 			"allTests": [
 				{
@@ -1278,8 +1278,8 @@
 		{
 			"id": "5bb4eb7b-b177-41cc-8d6f-70738244bf19",
 			"name": "Удаляет блюдо",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes/bcd79a45-7947-4e5b-b564-0d1fd692229b",
-			"time": 19,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes/d6d75589-3773-448a-bee0-f6ac025441f3",
+			"time": 18,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1299,7 +1299,7 @@
 				}
 			},
 			"times": [
-				19
+				18
 			],
 			"allTests": [
 				{
@@ -1311,8 +1311,8 @@
 		{
 			"id": "70f3b92c-fd7b-43b4-b335-663b2990e201",
 			"name": "Просматривает список блюд",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes",
-			"time": 23,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes",
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1337,7 +1337,7 @@
 				}
 			},
 			"times": [
-				23
+				14
 			],
 			"allTests": [
 				{
@@ -1350,8 +1350,8 @@
 		{
 			"id": "6067b009-6ebe-4f5a-8074-e0f67595509b",
 			"name": "Просматривает определенное блюдо",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce/dishes/bcd79a45-7947-4e5b-b564-0d1fd692229b",
-			"time": 20,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9/dishes/d6d75589-3773-448a-bee0-f6ac025441f3",
+			"time": 13,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -1376,7 +1376,7 @@
 				}
 			},
 			"times": [
-				20
+				13
 			],
 			"allTests": [
 				{
@@ -1389,8 +1389,8 @@
 		{
 			"id": "d6eea24b-03c4-4537-893a-c280dacdaf4f",
 			"name": "Удаляет подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus/f81991df-2cc6-44ed-b076-2a7d3f7d21ce",
-			"time": 26,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus/87da8377-9752-48e5-8803-f46c1c2b09d9",
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1410,7 +1410,7 @@
 				}
 			},
 			"times": [
-				26
+				14
 			],
 			"allTests": [
 				{
@@ -1422,8 +1422,8 @@
 		{
 			"id": "964114bf-6011-493e-9e31-299c83e816e8",
 			"name": "Просматривает список подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56/submenus",
-			"time": 21,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700/submenus",
+			"time": 16,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1448,7 +1448,7 @@
 				}
 			},
 			"times": [
-				21
+				16
 			],
 			"allTests": [
 				{
@@ -1461,8 +1461,8 @@
 		{
 			"id": "e22e7dae-d467-4e41-8ac7-804cb1f084ec",
 			"name": "Удаляет меню",
-			"url": "127.0.0.1:8000/api/v1/menus/d261cf9c-3915-43c1-b1aa-75982caeff56",
-			"time": 27,
+			"url": "127.0.0.1:8000/api/v1/menus/ca425559-5c88-4c47-bd8d-c80a62fbe700",
+			"time": 12,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1482,7 +1482,7 @@
 				}
 			},
 			"times": [
-				27
+				12
 			],
 			"allTests": [
 				{
@@ -1495,7 +1495,7 @@
 			"id": "44682dbb-0164-452c-9b24-bc9305acda15",
 			"name": "Просматривает список меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 17,
+			"time": 16,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1520,7 +1520,7 @@
 				}
 			},
 			"times": [
-				17
+				16
 			],
 			"allTests": [
 				{
@@ -1534,7 +1534,7 @@
 			"id": "59feacd5-abe2-4383-8219-05524a6529e4",
 			"name": "Создает меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 15,
+			"time": 22,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1554,7 +1554,7 @@
 				}
 			},
 			"times": [
-				15
+				22
 			],
 			"allTests": [
 				{
@@ -1566,7 +1566,7 @@
 		{
 			"id": "0e0601f3-cbdf-4b40-a421-6d8ca7bae379",
 			"name": "Создает подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711/submenus",
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f/submenus",
 			"time": 18,
 			"responseCode": {
 				"code": 201,
@@ -1599,8 +1599,8 @@
 		{
 			"id": "8140eda3-ab44-4523-a768-1b81c6245ac5",
 			"name": "Создает блюдо 1",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711/submenus/a07bc87d-868e-4827-90aa-0111f781b710/dishes",
-			"time": 35,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f/submenus/a9c6ddce-9027-4a1a-a216-a55b310e2abb/dishes",
+			"time": 17,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1620,7 +1620,7 @@
 				}
 			},
 			"times": [
-				35
+				17
 			],
 			"allTests": [
 				{
@@ -1632,8 +1632,8 @@
 		{
 			"id": "97e6af5b-1e44-4451-b580-51429649d3ae",
 			"name": "Создает блюдо 2",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711/submenus/a07bc87d-868e-4827-90aa-0111f781b710/dishes",
-			"time": 28,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f/submenus/a9c6ddce-9027-4a1a-a216-a55b310e2abb/dishes",
+			"time": 16,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1653,7 +1653,7 @@
 				}
 			},
 			"times": [
-				28
+				16
 			],
 			"allTests": [
 				{
@@ -1665,8 +1665,8 @@
 		{
 			"id": "37c18b66-85ba-444b-b12d-0ee85ad966e9",
 			"name": "Просматривает определенное меню",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711",
-			"time": 17,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f",
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1696,7 +1696,7 @@
 				}
 			},
 			"times": [
-				17
+				14
 			],
 			"allTests": [
 				{
@@ -1710,8 +1710,8 @@
 		{
 			"id": "807cd6cf-0fc6-433d-9486-ab90faf9545c",
 			"name": "Просматривает определенное подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711/submenus/a07bc87d-868e-4827-90aa-0111f781b710",
-			"time": 19,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f/submenus/a9c6ddce-9027-4a1a-a216-a55b310e2abb",
+			"time": 12,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1736,7 +1736,7 @@
 				}
 			},
 			"times": [
-				19
+				12
 			],
 			"allTests": [
 				{
@@ -1749,8 +1749,8 @@
 		{
 			"id": "f38429f6-4592-4b0d-aa55-58cbe6530528",
 			"name": "Удаляет подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711/submenus/a07bc87d-868e-4827-90aa-0111f781b710",
-			"time": 20,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f/submenus/a9c6ddce-9027-4a1a-a216-a55b310e2abb",
+			"time": 12,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1765,7 +1765,7 @@
 				}
 			},
 			"times": [
-				20
+				12
 			],
 			"allTests": [
 				{
@@ -1776,8 +1776,8 @@
 		{
 			"id": "28af4253-0e39-4991-9625-41787402dc56",
 			"name": "Просматривает список подменю",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711/submenus",
-			"time": 21,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f/submenus",
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1797,7 +1797,7 @@
 				}
 			},
 			"times": [
-				21
+				13
 			],
 			"allTests": [
 				{
@@ -1809,8 +1809,8 @@
 		{
 			"id": "f03029e6-718d-4149-a68a-7a4577a29fd3",
 			"name": "Просматривает список блюд",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711/submenus/a07bc87d-868e-4827-90aa-0111f781b710/dishes",
-			"time": 15,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f/submenus/a9c6ddce-9027-4a1a-a216-a55b310e2abb/dishes",
+			"time": 11,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1830,7 +1830,7 @@
 				}
 			},
 			"times": [
-				15
+				11
 			],
 			"allTests": [
 				{
@@ -1842,8 +1842,8 @@
 		{
 			"id": "b1e2b93c-d475-4f02-8cd9-9edd0fe6791e",
 			"name": "Просматривает определенное меню",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711",
-			"time": 51,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f",
+			"time": 12,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1873,7 +1873,7 @@
 				}
 			},
 			"times": [
-				51
+				12
 			],
 			"allTests": [
 				{
@@ -1887,8 +1887,8 @@
 		{
 			"id": "e7ade139-ecaf-4950-b152-b8fe83938e2a",
 			"name": "Удаляет меню",
-			"url": "127.0.0.1:8000/api/v1/menus/e48cdd9a-97be-4a3a-9bec-c25dde4fb711",
-			"time": 19,
+			"url": "127.0.0.1:8000/api/v1/menus/29d68fa2-d884-4346-af94-ae3530573e0f",
+			"time": 12,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1903,7 +1903,7 @@
 				}
 			},
 			"times": [
-				19
+				12
 			],
 			"allTests": [
 				{
@@ -1915,7 +1915,7 @@
 			"id": "29e600a8-89ea-469c-aa8d-88eb3c6ece91",
 			"name": "Просматривает список меню",
 			"url": "127.0.0.1:8000/api/v1/menus",
-			"time": 55,
+			"time": 17,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1935,7 +1935,7 @@
 				}
 			},
 			"times": [
-				55
+				17
 			],
 			"allTests": [
 				{
@@ -1946,7 +1946,7 @@
 		}
 	],
 	"count": 1,
-	"totalTime": 930,
+	"totalTime": 732,
 	"collection": {
 		"requests": [
 			{
