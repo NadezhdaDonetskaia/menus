@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import Depends
+from fastapi import BackgroundTasks, Depends
 from fastapi.responses import JSONResponse
 
 from repositories.dish import DishRepository
@@ -17,6 +17,7 @@ class DishService:
     def __init__(self, dish_repository=Depends(DishRepository)):
         self.dish_repository = dish_repository
         self._redis = CacheRepositoryDish()
+        self.background_tasks = BackgroundTasks()
 
     async def create(self,
                      menu_id: UUID,
@@ -35,10 +36,13 @@ class DishService:
                      dish_id: UUID,
                      dish_data: BaseDish) -> DishShow:
         update_dish = await self.dish_repository.update(dish_id, dish_data)
-        self._redis.create_update(menu_id=menu_id,
-                                  submenu_id=submenu_id,
-                                  dish_id=dish_id,
-                                  data=update_dish)
+        self.background_tasks.add_task(
+            self._redis.create_update(
+                menu_id=menu_id,
+                submenu_id=submenu_id,
+                dish_id=dish_id,
+                data=update_dish)
+        )
         return update_dish
 
     async def get_all(self,
@@ -50,7 +54,9 @@ class DishService:
         if self._redis.exists(key_dish):
             return self._redis.get_all(key_dish)
         dishes = await self.dish_repository.get_all(submenu_id)
-        self._redis.set_all(key=key_dish, data=dishes)
+        self.background_tasks.add_task(
+            self._redis.set_all(key=key_dish, data=dishes)
+        )
         return dishes
 
     async def get_by_id(self,
@@ -63,7 +69,9 @@ class DishService:
         if self._redis.exists(key_submenu):
             return self._redis.get(key_submenu)
         submenu = await self.dish_repository.get_by_id(dish_id)
-        self._redis.set(key=key_submenu, data=submenu)
+        self.background_tasks.add_task(
+            self._redis.set(key=key_submenu, data=submenu)
+        )
         return submenu
 
     async def delete(self,
@@ -71,7 +79,10 @@ class DishService:
                      submenu_id: UUID,
                      dish_id: UUID) -> JSONResponse:
         response = await self.dish_repository.delete(dish_id)
-        self._redis.delete(menu_id=menu_id,
-                           submenu_id=submenu_id,
-                           dish_id=dish_id)
+        self.background_tasks.add_task(
+            self._redis.delete(
+                menu_id=menu_id,
+                submenu_id=submenu_id,
+                dish_id=dish_id)
+        )
         return response
