@@ -34,9 +34,6 @@ class CacheRepository:
     def exists(self, key: str) -> bool:
         return self.redis.exists(key)
 
-    def del_all(self) -> None:
-        self.redis.flushall()
-
 
 class CacheRepositoryMenu(CacheRepository):
 

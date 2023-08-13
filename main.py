@@ -5,7 +5,6 @@ from fastapi.exceptions import ValidationException
 from fastapi.responses import JSONResponse
 
 from routes import dish_router, menu_router, sub_menu_router
-from services.cache import CacheRepository
 
 app = FastAPI(
     title='Menus App'
@@ -23,7 +22,6 @@ async def validation_exeption_handler(request: Request, exc: ValidationException
 app.include_router(menu_router)
 app.include_router(sub_menu_router)
 app.include_router(dish_router)
-app.add_event_handler('shutdown', CacheRepository().del_all)
 
 
 if __name__ == '__main__':

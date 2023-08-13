@@ -13,6 +13,7 @@ from main import app
 from models.dish import Dish
 from models.menu import Menu
 from models.submenu import SubMenu
+from services.cache import CacheRepository
 from tests.fixtures import DISH_DATA, DISH_DATA2, MENU_DATA, SUBMENU_DATA
 
 engine_test = create_async_engine(db_url_test)
@@ -29,6 +30,11 @@ async def override_get_async_db() -> AsyncGenerator[AsyncSession, None]:
 app.dependency_overrides[get_async_db] = override_get_async_db
 
 
+@app.get('/crear_cache')
+def clear_cache():
+    CacheRepository().redis.flushall()
+
+
 @pytest.fixture(autouse=True)
 async def prepare_database():
     async with engine_test.begin() as conn:
@@ -36,11 +42,11 @@ async def prepare_database():
     yield
     async with engine_test.begin() as conn:
         await conn.run_sync(metadata.drop_all)
+        clear_cache()
 
 
 @pytest.fixture(scope='session')
 def event_loop(request):
-    """Create an instance of the default event loop for each test case."""
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
