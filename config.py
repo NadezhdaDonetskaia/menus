@@ -23,3 +23,6 @@ DB_NAME_TEST = os.getenv('DB_USER_TEST')
 
 REDIS_HOST = os.getenv('REDIS_HOST_NAME')
 REDIS_PORT = os.getenv('REDIS_PORT')
+
+BROKER_URL = os.getenv('BROKER_URL')
+BACKEND_URL = os.getenv('BACKEND_URL')

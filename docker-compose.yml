@@ -5,8 +5,29 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      rabbitmq:
+      redis-cache:
+
     ports:
       - 8000:8000
+  celery:
+    image: nella611/menus
+    build: .
+    command: celery -A tasks.tasks.celery_app worker -E -l info
+    depends_on:
+      - app
+  celery-beat:
+    image: nella611/menus
+    build: .
+    command: celery -A tasks.tasks.celery_app beat -l info
+    depends_on:
+      - app
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
 
   redis-cache:
     image: redis:alpine
