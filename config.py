@@ -26,3 +26,4 @@ REDIS_PORT = os.getenv('REDIS_PORT')
 
 BROKER_URL = os.getenv('BROKER_URL')
 BACKEND_URL = os.getenv('BACKEND_URL')
+APP_URL = os.getenv('APP_URL')

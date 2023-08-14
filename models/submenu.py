@@ -14,8 +14,8 @@ class SubMenu(BaseDBModel):
     id: UUID = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     menu_id: UUID = Column(UUID, ForeignKey('menus.id',
                                             ondelete='CASCADE'))
-    title: str = Column(String(64), unique=True, index=True)
-    description: str = Column(String(128))
+    title: str = Column(String(), unique=True, index=True)
+    description: str = Column(String())
 
     menu = relationship('Menu', back_populates='submenus')
     dishes = relationship('Dish', back_populates='submenu',

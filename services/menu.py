@@ -14,7 +14,7 @@ class MenuService:
         self.menu_repository = menu_repository
         self._redis = CacheRepositoryMenu()
         self.key = MENU_CACHE_NAME
-        self.background_tasks = BackgroundTasks()
+        self.background_tasks: BackgroundTasks = BackgroundTasks()
 
     async def create(self, menu_data: BaseMenu) -> MenuShow:
         new_menu = await self.menu_repository.create(menu_data)

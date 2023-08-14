@@ -13,8 +13,8 @@ class Menu(BaseDBModel):
     __tablename__ = 'menus'
 
     id: UUID = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    title: str = Column(String(64), unique=True, index=True)
-    description: str = Column(String(128))
+    title: str = Column(String(), unique=True, index=True)
+    description: str = Column(String())
 
     submenus = relationship('SubMenu', back_populates='menu',
                             cascade='all, delete-orphan')

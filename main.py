@@ -5,7 +5,9 @@ from fastapi.exceptions import ValidationException
 from fastapi.responses import JSONResponse
 
 from routes import all_router, dish_router, menu_router, sub_menu_router
-from tasks.tasks import celery_app
+
+# from tasks.tasks import celery_app
+from tasks.tasks import task_router
 
 app = FastAPI(
     title='Menus App'
@@ -24,9 +26,10 @@ app.include_router(menu_router)
 app.include_router(sub_menu_router)
 app.include_router(dish_router)
 app.include_router(all_router)
+app.include_router(task_router)
 
 
-app.selery_app = celery_app
+# app.selery_app = celery_app
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)

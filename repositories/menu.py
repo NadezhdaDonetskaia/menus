@@ -64,6 +64,7 @@ class MenuRepository:
         return new_menu.first()
 
     async def update(self, menu_id: UUID, menu_data: BaseMenu) -> MenuShow:
+        logger.info(f'Update NENU {menu_id}')
         stmt = update(
             self.model).where(
             self.model.id == menu_id).values(
