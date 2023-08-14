@@ -73,3 +73,11 @@ http://localhost:8000/redoc
 ![Alt text](Open_API.png)
 
 Результаты тестов postman [тут](<menu app.postman_test_run.json>)
+
+
+### Заданя со звездочкой:
+\* Реализовать вывод количества подменю и блюд для Меню через один (сложный) ORM запрос. [Реализация](repositories/menu.py)
+
+** Реализовать тестовый сценарий «Проверка кол-ва блюд и подменю в меню» из Postman с помощью pytest. [Релизация](tests/test_counts.py)
+
+\* Описать ручки API в соответствий c OpenAPI (описаны выше в README)
