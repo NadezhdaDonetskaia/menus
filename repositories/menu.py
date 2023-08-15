@@ -122,4 +122,4 @@ class MenuRepository:
                 await self.delete(menu_id=menu_id)
         # create menu
         for menu_id, data in menu_data.items():
-            await self.create(menu_data=data, id=menu_id)
+            await self.create(menu_data=BaseMenu(**data), id=menu_id)
