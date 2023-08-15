@@ -10,9 +10,6 @@ from database import get_async_db
 from repositories.dish import DishRepository
 from repositories.menu import MenuRepository
 from repositories.submenu import SubMenuRepository
-from schemas.dish import BaseDish
-from schemas.menu import BaseMenu
-from schemas.submenu import BaseSubMenu
 from tasks.read_files import PATH_FILE_EXCEL as path
 from tasks.read_files import get_data_from_excel_file, is_change_file
 
@@ -27,8 +24,6 @@ async def test(session: AsyncSession = Depends(get_async_db)):
     return await check_and_update_base_excel_file(path, session)
 
 
-# задача реализована только на изменение,
-# иначе нужна двусторонняя настройка (что в базе -> то в файле)
 async def check_and_update_base_excel_file(excel_file_path, session):
     logger.info('start check_and_update_excel_file')
     if is_change_file(excel_file_path):
@@ -48,22 +43,24 @@ async def update_data(data, session):
 async def update_menu(menu_data, session):
     logger.info('Start update menu')
     menu_repo = MenuRepository(session)
-    for menu in menu_data:
-        await menu_repo.update(menu.pop('id'), BaseMenu(**menu))
+    await menu_repo.update_data_from_file(menu_data=menu_data)
 
 
 async def update_submenu(submenu_data, session):
     logger.info('Start update submenu')
     submenu_repo = SubMenuRepository(session)
-    for submenu in submenu_data:
-        await submenu_repo.update(submenu.pop('id'), BaseSubMenu(**submenu))
+    await submenu_repo.update_data_from_file(
+        # menu_id=menu_id,
+        submenu_data=submenu_data
+    )
 
 
 async def update_dish(dish_data, session):
     logger.info('Start update dish')
     dish_repo = DishRepository(session)
-    for dish in dish_data:
-        await dish_repo.update(dish.pop('id'), BaseDish(**dish))
+    await dish_repo.update_data_from_file(
+        dish_data=dish_data
+    )
 
 
 celery_app = Celery(

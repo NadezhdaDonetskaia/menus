@@ -1,4 +1,4 @@
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
@@ -48,8 +48,12 @@ class MenuRepository:
                 detail='menu not found')
         return menu
 
-    async def create(self, menu_data: BaseMenu) -> MenuShow:
-        stmt = insert(self.model).values(**menu_data.model_dump())
+    async def create(self,
+                     menu_data: BaseMenu,
+                     id: None | UUID = None) -> MenuShow:
+        if not id:
+            id = uuid4()
+        stmt = insert(self.model).values(**menu_data.model_dump(), id=id)
         await self.session.execute(stmt)
         await self.session.commit()
         query = select(
@@ -93,3 +97,29 @@ class MenuRepository:
                 'message': 'The menu has been deleted'
             })
         )
+
+    async def update_data_from_file(self,
+                                    menu_data: dict) -> None:
+        all_menu_id = await self.session.execute(
+            select(
+                self.model.id
+            )
+        )
+        await self.session.commit()
+        for menu_id in all_menu_id.all():
+            menu_id = menu_id[0]
+            logger.info(f' change from file menu {menu_id}')
+
+            # update menu
+            if menu_id in menu_data:
+                await self.update(menu_id=menu_id,
+                                  menu_data=BaseMenu(**menu_data[menu_id]))
+
+                menu_data.pop(menu_id)
+            # delete menu
+            else:
+                logger.info(f'delete menu from file {menu_id}')
+                await self.delete(menu_id=menu_id)
+        # create menu
+        for menu_id, data in menu_data.items():
+            await self.create(menu_data=data, id=menu_id)
