@@ -2,6 +2,7 @@ from uuid import UUID
 
 from fastapi import BackgroundTasks, Depends
 from fastapi.responses import JSONResponse
+from logger import logger
 
 from repositories.dish import DishRepository
 from schemas.dish import BaseDish, DishShow
@@ -28,6 +29,7 @@ class DishService:
                                   submenu_id=submenu_id,
                                   dish_id=new_dish.id,
                                   data=new_dish)
+        logger.info(f'Return new dish {new_dish}')
         return new_dish
 
     async def update(self,
@@ -52,11 +54,12 @@ class DishService:
                    f'{SUBMENU_CACHE_NAME}{submenu_id}' \
                    f'{DISH_CACHE_NAME}'
         if self._redis.exists(key_dish):
-            return self._redis.get_all(key_dish)
+            return self._redis.get(key_dish)
         dishes = await self.dish_repository.get_all(submenu_id)
         self.background_tasks.add_task(
             self._redis.set_all(key=key_dish, data=dishes)
         )
+        logger.info(f'Return new all dish {dishes}')
         return dishes
 
     async def get_by_id(self,
