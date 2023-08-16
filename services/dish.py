@@ -114,15 +114,15 @@ class DishService:
                 dish_data.pop(dish_id)
             # delete dish
             else:
-                menu_id = current_data.pop('menu_id')
-                submenu_id = current_data.pop('submenu_id')
+                submenu_id = await self.dish_repository.get_submenu_id(dish_id=dish_id)
+                menu_id = await self.dish_repository.get_menu_id(submenu_id)
                 await self.delete(
                     menu_id=menu_id,
                     submenu_id=submenu_id,
                     dish_id=dish_id)
             # create dish
         for dish_id, data in dish_data.items():
-            menu_id = current_data.pop('menu_id')
+            menu_id = data.pop('menu_id')
             submenu_id = data.pop('submenu_id')
             await self.create(
                 menu_id=menu_id,

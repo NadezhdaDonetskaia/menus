@@ -111,3 +111,19 @@ class DishRepository:
         )
         await self.session.commit()
         return all_dish_id.all()
+
+    async def get_menu_id(self, submenu_id) -> UUID:
+        menu_id = await self.session.execute(
+            select(Dish.submenu_id).where(Dish.submenu_id == submenu_id).limit(1)
+        )
+        menu_id = menu_id.first()
+        logger.info(f'ADD menu id {menu_id}')
+        return menu_id[0]
+
+    async def get_submenu_id(self, dish_id) -> UUID:
+        query = select(
+            self.model.submenu_id
+        ).where(self.model.id == dish_id)
+        dish_id = await self.session.execute(query)
+        dish_id = dish_id.first()
+        return dish_id[0]

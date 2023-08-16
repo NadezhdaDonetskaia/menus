@@ -93,7 +93,10 @@ class SubMenuService:
                 submenu_data.pop(submenu_id)
             # delete submenu
             else:
-                menu_id = current_data.pop('menu_id')
+                submenu = await self.submenu_repository.get_by_id(
+                    submenu_id=submenu_id)
+                submenu_id = submenu.id
+                menu_id = await self.submenu_repository.get_menu_id(submenu_id)
                 await self.delete(submenu_id=submenu_id,
                                   menu_id=menu_id)
         #  create submenu

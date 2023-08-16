@@ -109,3 +109,11 @@ class SubMenuRepository:
         )
         await self.session.commit()
         return all_submenu_id.all()
+
+    async def get_menu_id(self, submenu_id) -> UUID:
+        query = select(
+            self.model.menu_id
+        ).where(self.model.id == submenu_id)
+        munu_id = await self.session.execute(query)
+        munu_id = munu_id.first()
+        return munu_id[0]
