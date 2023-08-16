@@ -101,38 +101,11 @@ class SubMenuRepository:
             })
         )
 
-    async def update_data_from_file(
-            self,
-            submenu_data: dict
-    ) -> None:
+    async def get_all_submenu_id(self):
         all_submenu_id = await self.session.execute(
             select(
                 self.model.id
             )
         )
         await self.session.commit()
-        for submenu_id in all_submenu_id.all():
-            submenu_id = submenu_id[0]
-            # update submenu
-            if submenu_id in submenu_data:
-                current_data = submenu_data[submenu_id]
-                logger.info(f'Current data submenu {current_data}')
-                current_data.pop('menu_id')
-                await self.update(
-                    submenu_id=submenu_id,
-                    submenu_data=BaseSubMenu(**current_data)
-                )
-                submenu_data.pop(submenu_id)
-            # delete submenu
-            else:
-                await self.delete(submenu_id=submenu_id)
-        #  create submenu
-        logger.info(f' ALL ADDED SUBMENU {submenu_data}')
-        for submenu_id, data in submenu_data.items():
-            logger.info(f'Submenu DATA to ADD {data}')
-            menu_id = data.pop('menu_id')
-            await self.create(
-                menu_id=menu_id,
-                submenu_data=BaseSubMenu(**data),
-                id=submenu_id
-            )
+        return all_submenu_id.all()

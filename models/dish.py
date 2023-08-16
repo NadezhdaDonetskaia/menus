@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import UUID, Column, ForeignKey, String
+from sqlalchemy import UUID, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from database import BaseDBModel
@@ -15,5 +15,6 @@ class Dish(BaseDBModel):
     title: str = Column(String(), unique=True, index=True)
     description: str = Column(String())
     price: str = Column(String(8))
+    discount: int = Column(Integer())
 
     submenu = relationship('SubMenu', back_populates='dishes')

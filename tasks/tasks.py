@@ -10,6 +10,9 @@ from database import get_async_db
 from repositories.dish import DishRepository
 from repositories.menu import MenuRepository
 from repositories.submenu import SubMenuRepository
+from services.dish import DishService
+from services.menu import MenuService
+from services.submenu import SubMenuService
 from tasks.read_files import PATH_FILE_EXCEL as path
 from tasks.read_files import get_data_from_excel_file, is_change_file
 
@@ -42,22 +45,21 @@ async def update_data(data, session):
 
 async def update_menu(menu_data, session):
     logger.info('Start update menu')
-    menu_repo = MenuRepository(session)
+    menu_repo = MenuService(menu_repository=MenuRepository(session=session))
     await menu_repo.update_data_from_file(menu_data=menu_data)
 
 
 async def update_submenu(submenu_data, session):
     logger.info('Start update submenu')
-    submenu_repo = SubMenuRepository(session)
+    submenu_repo = SubMenuService(submenu_repository=SubMenuRepository(session=session))
     await submenu_repo.update_data_from_file(
-        # menu_id=menu_id,
         submenu_data=submenu_data
     )
 
 
 async def update_dish(dish_data, session):
     logger.info('Start update dish')
-    dish_repo = DishRepository(session)
+    dish_repo = DishService(dish_repository=DishRepository(session=session))
     await dish_repo.update_data_from_file(
         dish_data=dish_data
     )

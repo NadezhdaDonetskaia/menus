@@ -24,6 +24,7 @@ class DishRepository:
             self.model.title,
             self.model.description,
             self.model.price,
+            self.model.discount
         ).where(self.model.submenu_id == submenu_id)
         logger.debug(f'query dish all {query}')
         dishes = await self.session.execute(query)
@@ -35,7 +36,8 @@ class DishRepository:
             self.model.id,
             self.model.title,
             self.model.description,
-            self.model.price
+            self.model.price,
+            self.model.discount
         ).where(self.model.id == dish_id)
         dish = await self.session.execute(query)
         dish = dish.first()
@@ -49,19 +51,22 @@ class DishRepository:
     async def create(self,
                      submenu_id: UUID,
                      dish_data: BaseDish,
-                     id: None | UUID = None) -> DishShow:
+                     id: None | UUID = None,
+                     discount: None | int = None) -> DishShow:
         if not id:
             id = uuid4()
         stmt = insert(self.model).values(
             **dish_data.model_dump(),
-            submenu_id=submenu_id, id=id)
+            submenu_id=submenu_id,
+            id=id)
         await self.session.execute(stmt)
         await self.session.commit()
         query = select(
             self.model.id,
             self.model.title,
             self.model.description,
-            self.model.price
+            self.model.price,
+            self.model.discount
         ).where(self.model.title == dish_data.title)
         new_submenu = await self.session.execute(query)
         await self.session.commit()
@@ -98,37 +103,11 @@ class DishRepository:
             })
         )
 
-    async def update_data_from_file(
-            self,
-            dish_data: dict
-    ) -> None:
+    async def get_all_dish_id(self):
         all_dish_id = await self.session.execute(
             select(
                 self.model.id
             )
         )
         await self.session.commit()
-        all_dish_id = all_dish_id.all()
-        for dish_id in all_dish_id:
-            dish_id = dish_id[0]
-            # update dish
-            if dish_id in dish_data:
-                current_data = dish_data[dish_id]
-                logger.info(f'Current data dish {current_data}')
-                current_data.pop('submenu_id')
-                await self.update(
-                    dish_id=dish_id,
-                    dish_data=BaseDish(**current_data)
-                )
-                dish_data.pop(dish_id)
-            # delete dish
-            else:
-                await self.delete(dish_id=dish_id)
-            # create dish
-        for dish_id, data in dish_data.items():
-            submenu_id = data.pop('submenu_id')
-            await self.create(
-                submenu_id=submenu_id,
-                dish_data=BaseDish(**data),
-                id=dish_id
-            )
+        return all_dish_id.all()

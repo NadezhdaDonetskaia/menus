@@ -55,11 +55,17 @@ def get_data_from_excel_file(excel_file_path=PATH_FILE_EXCEL):
                 }
                 current_submenu_id = UUID(row[1])
             if row[2] and is_uuid(row[2]):
+                if row[6]:
+                    discount = int(row[6])
+                else:
+                    discount = 0
                 dishes[UUID(row[2])] = {
                     'title': row[3],
                     'description': row[4],
                     'price': str(row[5]),
-                    'submenu_id': current_submenu_id
+                    'discount': discount,
+                    'submenu_id': current_submenu_id,
+                    'menu_id': current_menu_id
                 }
         # logger.info(f'Row data menu {menus}')
         # logger.info(f'Row data submenu {submenus}')

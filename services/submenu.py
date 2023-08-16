@@ -1,3 +1,4 @@
+from typing import Any
 from uuid import UUID
 
 from fastapi import BackgroundTasks, Depends
@@ -9,14 +10,15 @@ from services.cache import MENU_CACHE_NAME, SUBMENU_CACHE_NAME, CacheRepositoryS
 
 
 class SubMenuService:
-    def __init__(self, submenu_repository=Depends(SubMenuRepository)):
+    def __init__(self, submenu_repository: SubMenuRepository = Depends(SubMenuRepository)):
         self.submenu_repository = submenu_repository
         self._redis = CacheRepositorySubMenu()
         self.background_tasks = BackgroundTasks()
 
     async def create(self,
                      menu_id: UUID,
-                     submenu_data: BaseSubMenu) -> SubMenuShow:
+                     submenu_data: BaseSubMenu,
+                     id: UUID | None = None) -> SubMenuShow:
         new_submenu = await self.submenu_repository.create(
             menu_id,
             submenu_data)
@@ -54,7 +56,7 @@ class SubMenuService:
 
     async def get_by_id(self,
                         menu_id: UUID,
-                        submenu_id: UUID) -> SubMenuShow:
+                        submenu_id: UUID) -> SubMenuShow | Any:
         key_submenu = f'{MENU_CACHE_NAME}{menu_id}' \
                       f'{SUBMENU_CACHE_NAME}{submenu_id}'
         if self._redis.exists(key_submenu):
@@ -71,3 +73,34 @@ class SubMenuService:
             self._redis.delete(menu_id=menu_id, submenu_id=submenu_id)
         )
         return response
+
+    async def update_data_from_file(
+            self,
+            submenu_data: dict
+    ) -> None:
+        all_submenu_id = await self.submenu_repository.get_all_submenu_id()
+        for submenu_id in all_submenu_id:
+            submenu_id = submenu_id[0]
+            # update submenu
+            if submenu_id in submenu_data:
+                current_data = submenu_data[submenu_id]
+                menu_id = current_data.pop('menu_id')
+                await self.update(
+                    menu_id=menu_id,
+                    submenu_id=submenu_id,
+                    submenu_data=BaseSubMenu(**current_data)
+                )
+                submenu_data.pop(submenu_id)
+            # delete submenu
+            else:
+                menu_id = current_data.pop('menu_id')
+                await self.delete(submenu_id=submenu_id,
+                                  menu_id=menu_id)
+        #  create submenu
+        for submenu_id, data in submenu_data.items():
+            menu_id = data.pop('menu_id')
+            await self.create(
+                menu_id=menu_id,
+                submenu_data=BaseSubMenu(**data),
+                id=submenu_id
+            )

@@ -98,28 +98,11 @@ class MenuRepository:
             })
         )
 
-    async def update_data_from_file(self,
-                                    menu_data: dict) -> None:
+    async def get_all_menu_id(self):
         all_menu_id = await self.session.execute(
             select(
                 self.model.id
             )
         )
         await self.session.commit()
-        for menu_id in all_menu_id.all():
-            menu_id = menu_id[0]
-            logger.info(f' change from file menu {menu_id}')
-
-            # update menu
-            if menu_id in menu_data:
-                await self.update(menu_id=menu_id,
-                                  menu_data=BaseMenu(**menu_data[menu_id]))
-
-                menu_data.pop(menu_id)
-            # delete menu
-            else:
-                logger.info(f'delete menu from file {menu_id}')
-                await self.delete(menu_id=menu_id)
-        # create menu
-        for menu_id, data in menu_data.items():
-            await self.create(menu_data=BaseMenu(**data), id=menu_id)
+        return all_menu_id.all()

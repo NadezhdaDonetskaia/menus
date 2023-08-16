@@ -1,3 +1,4 @@
+from typing import Any
 from uuid import UUID
 
 from fastapi import BackgroundTasks, Depends
@@ -15,7 +16,7 @@ from services.cache import (
 
 
 class DishService:
-    def __init__(self, dish_repository=Depends(DishRepository)):
+    def __init__(self, dish_repository: DishRepository = Depends(DishRepository)):
         self.dish_repository = dish_repository
         self._redis = CacheRepositoryDish()
         self.background_tasks = BackgroundTasks()
@@ -23,7 +24,8 @@ class DishService:
     async def create(self,
                      menu_id: UUID,
                      submenu_id: UUID,
-                     dish_data: BaseDish) -> DishShow:
+                     dish_data: BaseDish,
+                     id: UUID | None = None) -> DishShow:
         new_dish = await self.dish_repository.create(submenu_id, dish_data)
         self._redis.create_update(menu_id=menu_id,
                                   submenu_id=submenu_id,
@@ -65,7 +67,7 @@ class DishService:
     async def get_by_id(self,
                         menu_id: UUID,
                         submenu_id: UUID,
-                        dish_id: UUID) -> DishShow:
+                        dish_id: UUID) -> DishShow | Any:
         key_submenu = f'{MENU_CACHE_NAME}{menu_id}' \
                       f'{SUBMENU_CACHE_NAME}{submenu_id}' \
                       f'{DISH_CACHE_NAME}{dish_id}'
@@ -89,3 +91,42 @@ class DishService:
                 dish_id=dish_id)
         )
         return response
+
+    async def update_data_from_file(
+            self,
+            dish_data: dict
+    ) -> None:
+        all_dish_id = await self.dish_repository.get_all_dish_id()
+        for dish_id in all_dish_id:
+            dish_id = dish_id[0]
+            # update dish
+            if dish_id in dish_data:
+                current_data = dish_data[dish_id]
+                logger.info(f'Current data dish {current_data}')
+                submenu_id = current_data.pop('submenu_id')
+                menu_id = current_data.pop('menu_id')
+                await self.update(
+                    menu_id=menu_id,
+                    submenu_id=submenu_id,
+                    dish_id=dish_id,
+                    dish_data=BaseDish(**current_data)
+                )
+                dish_data.pop(dish_id)
+            # delete dish
+            else:
+                menu_id = current_data.pop('menu_id')
+                submenu_id = current_data.pop('submenu_id')
+                await self.delete(
+                    menu_id=menu_id,
+                    submenu_id=submenu_id,
+                    dish_id=dish_id)
+            # create dish
+        for dish_id, data in dish_data.items():
+            menu_id = current_data.pop('menu_id')
+            submenu_id = data.pop('submenu_id')
+            await self.create(
+                menu_id=menu_id,
+                submenu_id=submenu_id,
+                dish_data=BaseDish(**data),
+                id=dish_id
+            )
