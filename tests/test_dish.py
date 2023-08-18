@@ -1,11 +1,17 @@
 import pytest
+from httpx import AsyncClient
 from logger import logger
 
+from models.dish import Dish
+from models.menu import Menu
+from models.submenu import SubMenu
 from tests.fixtures import DISH_DATA, DISH_DATA_UPDATE
 
 
 @pytest.mark.anyio
-async def test_create_dish(test_db, menu, submenu):
+async def test_create_dish(test_db: AsyncClient,
+                           menu: Menu,
+                           submenu: SubMenu) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     response = await test_db.post(
@@ -21,7 +27,10 @@ async def test_create_dish(test_db, menu, submenu):
 
 
 @pytest.mark.anyio
-async def test_get_dishes(test_db, menu, submenu, dish):
+async def test_get_dishes(test_db: AsyncClient,
+                          menu: Menu,
+                          submenu: SubMenu,
+                          dish: Dish) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     response = await test_db.get(
@@ -33,7 +42,10 @@ async def test_get_dishes(test_db, menu, submenu, dish):
 
 
 @pytest.mark.anyio
-async def test_get_dish(test_db, menu, submenu, dish):
+async def test_get_dish(test_db: AsyncClient,
+                        menu: Menu,
+                        submenu: SubMenu,
+                        dish: Dish) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     dish_id = dish.id
@@ -46,7 +58,10 @@ async def test_get_dish(test_db, menu, submenu, dish):
 
 
 @pytest.mark.anyio
-async def test_update_dish(test_db, menu, submenu, dish):
+async def test_update_dish(test_db: AsyncClient,
+                           menu: Menu,
+                           submenu: SubMenu,
+                           dish: Dish) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     dish_id = dish.id
@@ -62,7 +77,10 @@ async def test_update_dish(test_db, menu, submenu, dish):
 
 
 @pytest.mark.anyio
-async def test_delete_dish(test_db, menu, submenu, dish):
+async def test_delete_dish(test_db: AsyncClient,
+                           menu: Menu,
+                           submenu: SubMenu,
+                           dish: Dish) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     dish_id = dish.id

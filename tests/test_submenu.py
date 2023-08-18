@@ -1,11 +1,15 @@
 import pytest
+from httpx import AsyncClient
 from logger import logger
 
+from models.menu import Menu
+from models.submenu import SubMenu
 from tests.fixtures import SUBMENU_DATA, SUBMENU_DATA_UPDATE
 
 
 @pytest.mark.anyio
-async def test_create_submenu(test_db, menu):
+async def test_create_submenu(test_db: AsyncClient,
+                              menu: Menu) -> None:
     menu_id = menu.id
     response = await test_db.post(f'/menus/{menu_id}/submenus',
                                   json=SUBMENU_DATA)
@@ -19,7 +23,9 @@ async def test_create_submenu(test_db, menu):
 
 
 @pytest.mark.anyio
-async def test_get_submenus(test_db, menu, submenu):
+async def test_get_submenus(test_db: AsyncClient,
+                            menu: Menu,
+                            submenu: SubMenu) -> None:
     menu_id = menu.id
     response = await test_db.get(f'/menus/{menu_id}/submenus')
     assert response.status_code == 200
@@ -29,7 +35,9 @@ async def test_get_submenus(test_db, menu, submenu):
 
 
 @pytest.mark.anyio
-async def test_get_submenu(test_db, menu, submenu):
+async def test_get_submenu(test_db: AsyncClient,
+                           menu: Menu,
+                           submenu: SubMenu) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     response = await test_db.get(f'/menus/{menu_id}/submenus/{submenu_id}')
@@ -40,7 +48,9 @@ async def test_get_submenu(test_db, menu, submenu):
 
 
 @pytest.mark.anyio
-async def test_update_submenu(test_db, menu, submenu):
+async def test_update_submenu(test_db: AsyncClient,
+                              menu: Menu,
+                              submenu: SubMenu) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     response = await test_db.patch(
@@ -53,7 +63,9 @@ async def test_update_submenu(test_db, menu, submenu):
 
 
 @pytest.mark.anyio
-async def test_delete_submenu(test_db, menu, submenu):
+async def test_delete_submenu(test_db: AsyncClient,
+                              menu: Menu,
+                              submenu: SubMenu) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     response = await test_db.delete(

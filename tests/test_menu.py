@@ -1,11 +1,13 @@
 import pytest
+from httpx import AsyncClient
 from logger import logger
 
+from models.menu import Menu
 from tests.fixtures import MENU_DATA, MENU_DATA_UPDATE
 
 
 @pytest.mark.anyio
-async def test_create_menu(test_db):
+async def test_create_menu(test_db: AsyncClient) -> None:
     response = await test_db.post('/menus', json=MENU_DATA)
     logger.debug(f'response create menu {response}')
     assert response.status_code == 201
@@ -17,7 +19,8 @@ async def test_create_menu(test_db):
 
 
 @pytest.mark.anyio
-async def test_get_menus(test_db, menu):
+async def test_get_menus(test_db: AsyncClient,
+                         menu: Menu) -> None:
     response = await test_db.get('/menus')
     assert response.status_code == 200
     assert len(response.json()) == 1
@@ -26,7 +29,8 @@ async def test_get_menus(test_db, menu):
 
 
 @pytest.mark.anyio
-async def test_get_menu(test_db, menu):
+async def test_get_menu(test_db: AsyncClient,
+                        menu: Menu) -> None:
     menu_id = menu.id
     response = await test_db.get(f'/menus/{menu_id}')
     assert response.status_code == 200
@@ -36,7 +40,8 @@ async def test_get_menu(test_db, menu):
 
 
 @pytest.mark.anyio
-async def test_update_menu(test_db, menu):
+async def test_update_menu(test_db: AsyncClient,
+                           menu: Menu) -> None:
     menu_id = menu.id
     response = await test_db.patch(f'/menus/{menu_id}',
                                    json=MENU_DATA_UPDATE)
@@ -47,7 +52,8 @@ async def test_update_menu(test_db, menu):
 
 
 @pytest.mark.anyio
-async def test_delete_menu(test_db, menu):
+async def test_delete_menu(test_db: AsyncClient,
+                           menu: Menu) -> None:
     response = await test_db.delete(f'/menus/{menu.id}')
     assert response.status_code == 200
     assert response.json()['message'] == 'The menu has been deleted'

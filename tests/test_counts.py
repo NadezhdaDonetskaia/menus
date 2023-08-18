@@ -1,8 +1,18 @@
 import pytest
+from httpx import AsyncClient
+
+from models.dish import Dish
+from models.menu import Menu
+from models.submenu import SubMenu
 
 
 @pytest.mark.anyio
-async def test_counts(test_db, menu, menu2, submenu, dish, dish2):
+async def test_counts(test_db: AsyncClient,
+                      menu: Menu,
+                      menu2: Menu,
+                      submenu: SubMenu,
+                      dish: Dish,
+                      dish2: Dish) -> None:
     menu_id = menu.id
     submenu_id = submenu.id
     menu2_id = menu2.id

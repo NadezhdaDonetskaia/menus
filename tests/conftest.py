@@ -1,5 +1,5 @@
 import asyncio
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Generator
 
 import pytest
 from fastapi.testclient import TestClient
@@ -31,12 +31,12 @@ app.dependency_overrides[get_async_db] = override_get_async_db
 
 
 @app.get('/crear_cache')
-def clear_cache():
+def clear_cache() -> None:
     CacheRepository().redis.flushall()
 
 
 @pytest.fixture(autouse=True)
-async def prepare_database():
+async def prepare_database() -> AsyncGenerator:
     async with engine_test.begin() as conn:
         await conn.run_sync(metadata.create_all)
     yield
@@ -46,7 +46,7 @@ async def prepare_database():
 
 
 @pytest.fixture(scope='session')
-def event_loop(request):
+def event_loop(request) -> Generator:
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
@@ -57,7 +57,7 @@ client = TestClient(app)
 
 @pytest.fixture
 @pytest.mark.anyio
-async def test_db() -> AsyncGenerator[AsyncClient, None]:
+async def test_db() -> AsyncClient:
     async with AsyncClient(app=app,
                            base_url='http://localhost:8000/api/v1') as ac:
         yield ac
@@ -65,21 +65,21 @@ async def test_db() -> AsyncGenerator[AsyncClient, None]:
 
 @pytest.fixture
 @pytest.mark.anyio
-async def menu(test_db) -> Menu:
+async def menu(test_db: AsyncClient) -> Menu:
     new_menu = await test_db.post('/menus', json=MENU_DATA)
     return Menu(**new_menu.json())
 
 
 @pytest.fixture
 @pytest.mark.anyio
-async def menu2(test_db) -> Menu:
+async def menu2(test_db: AsyncClient) -> Menu:
     new_menu = await test_db.post('/menus', json=MENU_DATA2)
     return Menu(**new_menu.json())
 
 
 @pytest.fixture
 @pytest.mark.anyio
-async def submenu(test_db, menu) -> SubMenu:
+async def submenu(test_db: AsyncClient, menu: Menu) -> SubMenu:
     new_submenu = await test_db.post(
         f'/menus/{menu.id}/submenus',
         json=SUBMENU_DATA)
@@ -89,7 +89,9 @@ async def submenu(test_db, menu) -> SubMenu:
 
 @pytest.fixture
 @pytest.mark.anyio
-async def dish(test_db, menu, submenu) -> Dish:
+async def dish(test_db: AsyncClient,
+               menu: Menu,
+               submenu: SubMenu) -> Dish:
     new_dish = await test_db.post(
         f'/menus/{menu.id}/submenus/{submenu.id}/dishes',
         json=DISH_DATA
@@ -99,7 +101,9 @@ async def dish(test_db, menu, submenu) -> Dish:
 
 
 @pytest.fixture
-async def dish2(test_db, menu, submenu) -> Dish:
+async def dish2(test_db: AsyncClient,
+                menu: Menu,
+                submenu: SubMenu) -> Dish:
     new_dish = await test_db.post(
         f'/menus/{menu.id}/submenus/{submenu.id}/dishes',
         json=DISH_DATA2
