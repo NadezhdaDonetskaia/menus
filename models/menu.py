@@ -5,7 +5,7 @@ from sqlalchemy.orm import column_property, relationship
 
 from database import BaseDBModel
 
-# from .dish import Dish
+from .dish import Dish
 from .submenu import SubMenu
 
 
@@ -33,5 +33,5 @@ class Menu(BaseDBModel):
         select(func.coalesce(
             cast(func.sum(SubMenu.dishes_count), Integer), 0
         )).where(
-            SubMenu.menu_id == id).scalar_subquery()
+            SubMenu.menu_id == id).correlate_except(Dish).scalar_subquery()
     )
