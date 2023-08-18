@@ -1,4 +1,5 @@
-MENU_DATA = {'title': 'Test Menu', 'description': 'Test Description'}
+MENU_DATA = {'title': 'Test Menu', 'description': 'Test Menu Description'}
+MENU_DATA2 = {'title': 'Test Menu2', 'description': 'Test Menu Description2'}
 MENU_DATA_UPDATE = {'title': 'Test Menu updat',
                     'description': 'Test Description update'}
 SUBMENU_DATA = {'title': 'Test SubMenu',
@@ -31,7 +32,7 @@ ALL_DATA = {
             },
             'description': 'Test Description SubMenu'
         },
-        'description': 'Test Description'
+        'description': 'Test Menu Description'
     },
 }
 
@@ -44,6 +45,6 @@ ALL_DATA_WITHOUT_DISH = {
             },
             'description': 'Test Description SubMenu'
         },
-        'description': 'Test Description'
+        'description': 'Test Menu Description'
     },
 }

@@ -2,13 +2,18 @@ import pytest
 
 
 @pytest.mark.anyio
-async def test_counts(test_db, menu, submenu, dish, dish2):
+async def test_counts(test_db, menu, menu2, submenu, dish, dish2):
     menu_id = menu.id
     submenu_id = submenu.id
+    menu2_id = menu2.id
 
     menu = await test_db.get(f'/menus/{menu_id}')
     assert menu.json()['submenus_count'] == 1
     assert menu.json()['dishes_count'] == 2
+
+    menu2 = await test_db.get(f'/menus/{menu2_id}')
+    assert menu2.json()['submenus_count'] == 0
+    assert menu2.json()['dishes_count'] == 0
 
     submenu = await test_db.get(f'/menus/{menu_id}/submenus/{submenu_id}')
     assert submenu.json()['dishes_count'] == 2

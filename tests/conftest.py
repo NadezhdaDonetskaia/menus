@@ -14,7 +14,7 @@ from models.dish import Dish
 from models.menu import Menu
 from models.submenu import SubMenu
 from services.cache import CacheRepository
-from tests.fixtures import DISH_DATA, DISH_DATA2, MENU_DATA, SUBMENU_DATA
+from tests.fixtures import DISH_DATA, DISH_DATA2, MENU_DATA, MENU_DATA2, SUBMENU_DATA
 
 engine_test = create_async_engine(db_url_test)
 async_session = async_sessionmaker(engine_test,
@@ -67,6 +67,13 @@ async def test_db() -> AsyncGenerator[AsyncClient, None]:
 @pytest.mark.anyio
 async def menu(test_db) -> Menu:
     new_menu = await test_db.post('/menus', json=MENU_DATA)
+    return Menu(**new_menu.json())
+
+
+@pytest.fixture
+@pytest.mark.anyio
+async def menu2(test_db) -> Menu:
+    new_menu = await test_db.post('/menus', json=MENU_DATA2)
     return Menu(**new_menu.json())
 
 
