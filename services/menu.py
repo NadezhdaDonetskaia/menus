@@ -18,7 +18,8 @@ class MenuService:
         self.background_tasks: BackgroundTasks = BackgroundTasks()
 
     async def create(self, menu_data: BaseMenu, id: UUID | None = None) -> MenuShow:
-        new_menu = await self.menu_repository.create(menu_data)
+        new_menu = await self.menu_repository.create(
+            menu_data=menu_data, id=id)
         logger.debug(f'new_menu {new_menu}')
         self.background_tasks.add_task(
             self._redis.create_update(menu_id=new_menu.id, data=new_menu))
@@ -77,4 +78,5 @@ class MenuService:
                 await self.delete(menu_id=menu_id)
         # create menu
         for menu_id, data in menu_data.items():
+            logger.info(f'MEnu IF from SERVICE {menu_id}')
             await self.create(menu_data=BaseMenu(**data), id=menu_id)

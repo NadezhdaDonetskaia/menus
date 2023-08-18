@@ -20,8 +20,9 @@ class SubMenuService:
                      submenu_data: BaseSubMenu,
                      id: UUID | None = None) -> SubMenuShow:
         new_submenu = await self.submenu_repository.create(
-            menu_id,
-            submenu_data)
+            menu_id=menu_id,
+            submenu_data=submenu_data,
+            id=id)
         self.background_tasks.add_task(
             self._redis.create_update(
                 menu_id=menu_id,

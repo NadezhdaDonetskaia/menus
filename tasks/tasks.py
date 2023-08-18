@@ -46,6 +46,7 @@ async def update_data(data, session):
 async def update_menu(menu_data, session):
     logger.info('Start update menu')
     menu_repo = MenuService(menu_repository=MenuRepository(session=session))
+    logger.info(f' UPDATE DATA FROM FILE == {menu_data}')
     await menu_repo.update_data_from_file(menu_data=menu_data)
 
 

@@ -51,8 +51,7 @@ class DishRepository:
     async def create(self,
                      submenu_id: UUID,
                      dish_data: BaseDish,
-                     id: None | UUID = None,
-                     discount: None | int = None) -> DishShow:
+                     id: None | UUID = None) -> DishShow:
         if not id:
             id = uuid4()
         stmt = insert(self.model).values(

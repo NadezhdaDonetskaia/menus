@@ -82,7 +82,7 @@ async def submenu(test_db, menu) -> SubMenu:
 
 @pytest.fixture
 @pytest.mark.anyio
-async def dish(test_db, menu, submenu):
+async def dish(test_db, menu, submenu) -> Dish:
     new_dish = await test_db.post(
         f'/menus/{menu.id}/submenus/{submenu.id}/dishes',
         json=DISH_DATA
@@ -92,7 +92,7 @@ async def dish(test_db, menu, submenu):
 
 
 @pytest.fixture
-async def dish2(test_db, menu, submenu):
+async def dish2(test_db, menu, submenu) -> Dish:
     new_dish = await test_db.post(
         f'/menus/{menu.id}/submenus/{submenu.id}/dishes',
         json=DISH_DATA2

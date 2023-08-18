@@ -26,7 +26,11 @@ class DishService:
                      submenu_id: UUID,
                      dish_data: BaseDish,
                      id: UUID | None = None) -> DishShow:
-        new_dish = await self.dish_repository.create(submenu_id, dish_data)
+        new_dish = await self.dish_repository.create(
+            submenu_id=submenu_id,
+            dish_data=dish_data,
+            id=id
+        )
         self._redis.create_update(menu_id=menu_id,
                                   submenu_id=submenu_id,
                                   dish_id=new_dish.id,

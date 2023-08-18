@@ -51,6 +51,7 @@ class MenuRepository:
     async def create(self,
                      menu_data: BaseMenu,
                      id: None | UUID = None) -> MenuShow:
+        logger.info(f'ID NEW MENU == {id}')
         if not id:
             id = uuid4()
         stmt = insert(self.model).values(**menu_data.model_dump(), id=id)
