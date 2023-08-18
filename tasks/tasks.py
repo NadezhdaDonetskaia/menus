@@ -1,3 +1,6 @@
+from typing import Any
+from uuid import UUID
+
 import requests
 from celery import Celery
 from fastapi import APIRouter, Depends
@@ -27,7 +30,9 @@ async def test(session: AsyncSession = Depends(get_async_db)):
     return await check_and_update_base_excel_file(path, session)
 
 
-async def check_and_update_base_excel_file(excel_file_path, session):
+async def check_and_update_base_excel_file(
+        excel_file_path: str,
+        session: AsyncSession) -> str | Any:
     logger.info('start check_and_update_excel_file')
     if is_change_file(excel_file_path):
         new_data = get_data_from_excel_file()
@@ -35,7 +40,11 @@ async def check_and_update_base_excel_file(excel_file_path, session):
     return 'No data to change'
 
 
-async def update_data(data, session):
+async def update_data(data: tuple[
+        dict[UUID, dict[str, Any]],
+        dict[UUID, dict[str, Any]],
+        dict[UUID, dict[str, Any]]],
+        session: AsyncSession) -> str:
     menu_data, submenu_data, dish_data = data
     await update_menu(menu_data, session)
     await update_submenu(submenu_data, session)
@@ -43,22 +52,26 @@ async def update_data(data, session):
     return 'Database data updated successfully'
 
 
-async def update_menu(menu_data, session):
+async def update_menu(menu_data: dict,
+                      session: AsyncSession) -> None:
     logger.info('Start update menu')
     menu_repo = MenuService(menu_repository=MenuRepository(session=session))
     logger.info(f' UPDATE DATA FROM FILE == {menu_data}')
     await menu_repo.update_data_from_file(menu_data=menu_data)
 
 
-async def update_submenu(submenu_data, session):
+async def update_submenu(submenu_data: dict,
+                         session: AsyncSession) -> None:
     logger.info('Start update submenu')
-    submenu_repo = SubMenuService(submenu_repository=SubMenuRepository(session=session))
+    submenu_repo = SubMenuService(
+        submenu_repository=SubMenuRepository(session=session))
     await submenu_repo.update_data_from_file(
         submenu_data=submenu_data
     )
 
 
-async def update_dish(dish_data, session):
+async def update_dish(dish_data: dict,
+                      session: AsyncSession) -> None:
     logger.info('Start update dish')
     dish_repo = DishService(dish_repository=DishRepository(session=session))
     await dish_repo.update_data_from_file(
@@ -86,7 +99,7 @@ celery_app.conf.update(task_track_started=True)
 
 
 @celery_app.task
-def check_and_update_excel_file():
+def check_and_update_excel_file() -> None:
     requests.get(f'{APP_URL}/api/v1/update_from_file')
 
 

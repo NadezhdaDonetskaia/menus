@@ -1,5 +1,6 @@
 import os
 from datetime import datetime, timedelta
+from typing import Any
 from uuid import UUID
 
 from logger import logger
@@ -11,7 +12,7 @@ PATH_FILE_EXCEL = os.path.join(current_directory, relative_path)
 
 
 def is_change_file(file_path: str,
-                   threshold_seconds: int = 15):
+                   threshold_seconds: int = 15) -> bool:
 
     file_stat = os.stat(file_path)
     last_modification_time = datetime.fromtimestamp(file_stat.st_mtime)
@@ -19,7 +20,7 @@ def is_change_file(file_path: str,
     return delta_time <= timedelta(seconds=threshold_seconds)
 
 
-def is_uuid(data_str):
+def is_uuid(data_str: Any) -> bool:
     try:
         UUID(data_str)
         return True
@@ -28,7 +29,11 @@ def is_uuid(data_str):
     return False
 
 
-def get_data_from_excel_file(excel_file_path=PATH_FILE_EXCEL):
+def get_data_from_excel_file(
+        excel_file_path: str = PATH_FILE_EXCEL) -> tuple[
+            dict[UUID, dict[str, Any]],
+            dict[UUID, dict[str, Any]],
+            dict[UUID, dict[str, Any]]]:
     try:
         logger.info('Start reading file')
         workbook = load_workbook(excel_file_path, data_only=True)
@@ -74,5 +79,6 @@ def get_data_from_excel_file(excel_file_path=PATH_FILE_EXCEL):
         return menus, submenus, dishes
     except Exception as ex:
         logger.error(f'ERRROR!!!!!!! {ex}')
+        raise ex
     finally:
         workbook.close()
